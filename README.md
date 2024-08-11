@@ -1,8 +1,3 @@
-<p align="center">
-  <a href="https://github.com/x0sina/marzban-sub" target="_blank" rel="noopener noreferrer">
-    <img src="https://raw.githubusercontent.com/x0sina/marzban-sub/main/PreviewTemplate.png" title="Marzba-Sub"/>
-  </a>
-</p>
 <h1 align="center"/>Subscription template for the panel  <a href="https://github.com/Gozargah/Marzban">border guard</a></h1>
 
 ## Table of contents
