@@ -22,7 +22,7 @@ if (!function_exists('str_contains'))
     die('Please upgrade your PHP version to 8 or above');
 $isTextHTML = str_contains(($_SERVER['HTTP_ACCEPT'] ?? ''), 'text/html');
 
-const BASE_URL = "http://139.59.101.236:8000/sub/RlJFRSwxNzIzMzg4Mzk0QpFLRY5e33"; // Replace IP address and port and set https for SSL
+const BASE_URL = "http://139.59.101.236:8000"; // Replace IP address and port and set https for SSL
 
 $URL = BASE_URL . $_SERVER['REQUEST_URI'] ?? '';
 $URL .= $isTextHTML ? '/info' : '';
