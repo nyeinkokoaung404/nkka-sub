@@ -3204,18 +3204,19 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 
     <script defer>
         const sub = "{{ user.subscription_url }}"
+        const customersub = "{{ user.username }}"
         let fullUrl = `${window.location.origin}{{ user.subscription_url }}`;
         if (sub.startsWith("http")) {
             fullUrl = sub;
         }
 
         function setHrefs() {
-            document.getElementById("ios-streisand").href = `streisand://import/${fullUrl}#⚡️4-0-4-Sub🚀`;
-            document.getElementById("ios-v2box").href = `v2box://install-sub?url=${fullUrl}&name=⚡️4-0-4-Sub🚀`
-            document.getElementById("android-v2rayng").href = `v2rayng://install-config?url=${fullUrl}`;
-            document.getElementById("ios-singbox").href = `sing-box://import-remote-profile?url=${fullUrl}#⚡️4-0-4-Sub🚀`;
-            document.getElementById("android-singbox").href = `sing-box://import-remote-profile?url=${fullUrl}#⚡️4-0-4-Sub🚀`;
-            document.getElementById("android-nekobox").href = `sn://subscription?url=${fullUrl}&name=⚡️4-0-4-Sub🚀`;
+            document.getElementById("ios-streisand").href = `streisand://import/${fullUrl}#${customersub}`;
+            document.getElementById("ios-v2box").href = `v2box://install-sub?url=${fullUrl}&name=${customersub}`
+            document.getElementById("android-v2rayng").href = `v2rayng://install-config?url=${customersub}`;
+            document.getElementById("ios-singbox").href = `sing-box://import-remote-profile?url=${fullUrl}#${customersub}`;
+            document.getElementById("android-singbox").href = `sing-box://import-remote-profile?url=${fullUrl}#${customersub}`;
+            document.getElementById("android-nekobox").href = `sn://subscription?url=${fullUrl}&name=${customersub}`;
             document.getElementById("windows-clashverge").href = `clash://install-config?url=${fullUrl}`
 
 
@@ -3290,14 +3291,14 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         function openFoXrayURL() {
             var currentURL = window.location.href;
             var encodedURL = btoa(currentURL);
-            var foXrayURL = 'foxray://yiguo.dev/sub/add/?url=' + encodedURL + '#⚡️4-0-4-Sub🚀';
+            var foXrayURL = 'foxray://yiguo.dev/sub/add/?url=' + encodedURL + '#{{ user.username }}';
             window.location.href = foXrayURL;
         }
 
         function openShadowrocketURL() {
             var currentURL = window.location.href;
             var encodedURL = btoa(currentURL);
-            var shadowrocketLink = 'sub://' + encodedURL + '#⚡️4-0-4-Sub🚀';
+            var shadowrocketLink = 'sub://' + encodedURL + '#{{ user.username }}';
             window.location.href = shadowrocketLink;
         }
 
@@ -3991,7 +3992,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                 <div
                     class="flex mb-8 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-3xl p-8 dark:text-white text-black flex-col sm:flex-row space-y-10 sm:space-y-0 sm:divide-x sm:rtl:divide-x-reverse sm:divide-blue-600/50">
                     <div class="basis-1/3 space-y-5 flex flex-col items-center py-3 sm:ltr:pr-9 sm:rtl:pl-9" x-data>
-                        <h1>🚀 Panel<span style="font-size: smaller;"> {{ user.username }} 🚀</span></h1>
+                        <h1>🚀 Panel {{ user.username }} 🚀</h1>
                         <div x-text="calculatePercentage(dataUsed, dataLimit) + '%'"
                             :class="getChartColor(calculatePercentage(dataUsed, dataLimit))"
                             class="radial-progress font-black text-2xl" id="progress__bar" style="--size:9rem;
