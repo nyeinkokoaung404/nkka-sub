@@ -3211,7 +3211,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         }
 
         function setHrefs() {
-            document.getElementById("ios-streisand").href = `streisand://import/${fullUrl}#${customersub}`;
+            document.getElementById("ios-streisand").href = `streisand://import/${fullUrl}`;
             document.getElementById("ios-v2box").href = `v2box://install-sub?url=${fullUrl}&name=${customersub}`
             document.getElementById("android-v2rayng").href = `v2rayng://install-config?url=${customersub}`;
             document.getElementById("ios-singbox").href = `sing-box://import-remote-profile?url=${fullUrl}#${customersub}`;
