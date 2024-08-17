@@ -200,7 +200,7 @@
         width: 5%;
       }
       to {
-        width: { user.used_traffic }%;
+        width: {{ user.used_traffic |% }};
       }
     }
     @keyframes progressLineTransmission {
@@ -208,7 +208,7 @@
         width: 5%;
       }
       to {
-        width: { user.used_traffic }%;
+        width: {{ user.used_traffic |% }};
       }
     }
         
@@ -232,7 +232,7 @@
 
 <body>
   <div class="profile-card">
-    <img alt="Avatar Image" class="profile-card__avatar" src="https://images.weserv.nl/?url=https://raw.githubusercontent.com/Gozargah/Marzban-docs/master/screenshots/logo-dark.png?v=4&amp;h=300&amp;w=300&amp;fit=cover&amp;maxage=7d&amp;bg=000">
+    <img alt="Avatar Image" class="profile-card__avatar" src="https://images.weserv.nl/?url=https://iam404.serv00.net/404.png?v=4&amp;h=300&amp;w=300&amp;fit=cover&amp;maxage=7d&amp;bg=000">
     <div class="profile-card__bio">
       <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
       <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #1cfd00">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
@@ -312,6 +312,7 @@
           <a class="profile-card__links-button" href="https://github.com/MatsuriDayo/nekoray/releases/download/3.26/nekoray-3.26-2023-12-09-windows64.zip" rel="noopener noreferrer" target="_blank">nekoray</a>
         </div>
       </div>
+      <div class="profile-card__separator"></div>
     </div>
   </div>
 
