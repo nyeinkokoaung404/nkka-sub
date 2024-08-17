@@ -198,8 +198,7 @@
       }
       to {
         width: {{ user.used_traffic | bytesformat
-                                    }} / {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
-                                    endif %};
+                                    }};
       }
     }
     @keyframes progressLineTransmission {
@@ -207,8 +206,7 @@
         width: 5%;
       }
       to {
-        width: {{ user.used_traffic | bytesformat
-                                    }} / {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
+        width: {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
                                     endif %};
       }
     }
