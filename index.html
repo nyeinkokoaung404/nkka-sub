@@ -193,20 +193,24 @@
       left: 0;
     }
     @-webkit-keyframes progressLineTransmission {
-      0% {
-    transform: translatex(16px);
-}
-100% {
-    transform: translatex(160px);
-}
+      from {
+        width: 5%;
+      }
+      to {
+        width: {{ user.used_traffic | bytesformat
+                                    }} / {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
+                                    endif %};
+      }
     }
     @keyframes progressLineTransmission {
-      0% {
-    transform: translatex(16px);
-}
-100% {
-    transform: translatex(160px);
-}
+      from {
+        width: 5%;
+      }
+      to {
+        width: {{ user.used_traffic | bytesformat
+                                    }} / {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
+                                    endif %};
+      }
     }
   </style>
 
