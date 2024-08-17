@@ -200,7 +200,7 @@
         width: 5%;
       }
       to {
-        width: 100%;
+        width: calculatePercentage(dataUsed, dataLimit) + '%';
       }
     }
     @keyframes progressLineTransmission {
@@ -208,7 +208,7 @@
         width: 5%;
       }
       to {
-        width: 100%;
+        width: calculatePercentage(dataUsed, dataLimit) + '%';
       }
     }
   </style>
