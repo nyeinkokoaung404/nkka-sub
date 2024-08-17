@@ -256,10 +256,10 @@
           Quick add subscription link
         </label>
         <div class="accordion-content">
-          <a class="profile-card__links-button" href="sing-box://import-remote-profile?url=/sub/MTI3Mzg0MTUwMl9mOWM3LDE3MjM4NTk3NDAoLrd0hmTxk#1273841502_f9c7" rel="noopener noreferrer" target="_blank">Add to sing-box</a>
-          <a class="profile-card__links-button" href="v2rayng://install-config?url=/sub/MTI3Mzg0MTUwMl9mOWM3LDE3MjM4NTk3NDAoLrd0hmTxk" rel="noopener noreferrer" target="_blank">Add to v2rayNG</a>
-          <a class="profile-card__links-button" href="sn://subscription?url=/sub/MTI3Mzg0MTUwMl9mOWM3LDE3MjM4NTk3NDAoLrd0hmTxk&amp;name=1273841502_f9c7" rel="noopener noreferrer" target="_blank">Add to NekoBox</a>
-          <a class="profile-card__links-button" href="streisand://import//sub/MTI3Mzg0MTUwMl9mOWM3LDE3MjM4NTk3NDAoLrd0hmTxk" rel="noopener noreferrer" target="_blank">Add to Streisand</a>
+          <a class="profile-card__links-button" href="sing-box://import-remote-profile?url=/sub/{{ user.subscription_url }}#{{ user.username }}" rel="noopener noreferrer" target="_blank">Add to sing-box</a>
+          <a class="profile-card__links-button" href="v2rayng://install-config?url=/sub/{{ user.subscription_url }}" rel="noopener noreferrer" target="_blank">Add to v2rayNG</a>
+          <a class="profile-card__links-button" href="sn://subscription?url=/sub/{{ user.subscription_url }};name={{ user.username }}" rel="noopener noreferrer" target="_blank">Add to NekoBox</a>
+          <a class="profile-card__links-button" href="streisand://import//sub/{{ user.subscription_url }}" rel="noopener noreferrer" target="_blank">Add to Streisand</a>
         </div>
       </div>
       <div class="profile-card__separator"></div>
