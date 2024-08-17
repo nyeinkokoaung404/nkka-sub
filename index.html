@@ -190,10 +190,10 @@
       position: absolute;
     }
     .progressBarPoint--start {
-      right: 0;
+      left: 0;
     }
     .progressBarPoint--end {
-      left: 0;
+      right: 0;
     }
     @-webkit-keyframes progressLineTransmission {
       from {
@@ -246,8 +246,10 @@
             <span class="progressBarCircle"></span>
           </div>
         </div>
-        <span class="progressBarPoint progressBarPoint--start">0 GB</span>
-        <span class="progressBarPoint progressBarPoint--end">250.0 MB</span>
+        <span class="progressBarPoint progressBarPoint--start">{{ user.used_traffic | bytesformat
+                                    }}</span>
+        <span class="progressBarPoint progressBarPoint--end">{% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
+                                    endif %}</span>
       </div>
     </div>
     <div class="profile-card__links">
