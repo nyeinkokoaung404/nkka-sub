@@ -200,7 +200,7 @@
         width: 5%;
       }
       to {
-        width: {{ user.used_traffic |% }};
+        width: { user.used_traffic };
       }
     }
     @keyframes progressLineTransmission {
@@ -208,7 +208,7 @@
         width: 5%;
       }
       to {
-        width: {{ user.used_traffic |% }};
+        width: { user.used_traffic };
       }
     }
         
