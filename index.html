@@ -147,6 +147,9 @@
       text-decoration: none;
       margin-bottom: 0.5rem;
     }
+    .profile-card__links-button:hover {
+      box-shadow: -3px 3px 0 #000;
+    }
     .progressBarContainer {
       margin-top: 15px;
       position: relative;
@@ -187,23 +190,25 @@
       position: absolute;
     }
     .progressBarPoint--start {
-      right: 0;
+      left: 0;
     }
     .progressBarPoint--end {
-      left: 0;
+      right: 1;
     }
     @-webkit-keyframes progressLineTransmission {
       from {
         width: 5%;
       }
-      to { 5%;
+      to {
+        width: 5%;
       }
     }
     @keyframes progressLineTransmission {
       from {
         width: 5%;
       }
-      to { 5%;
+      to {
+        width: 5%;
       }
     }
   </style>
