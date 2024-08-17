@@ -205,7 +205,8 @@
         width: 5%;
       }
       to {
-        width: {% endif %};
+        width: {{ user.data_limit | bytesformat }}{%
+                                    endif %};
       }
     }
   </style>
