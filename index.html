@@ -234,10 +234,6 @@
             
         
       </h2>
-      <h2 class="profile-card__bio-title"> Remaining Time: {% if not user.expire %}∞{% else %}{% set
-                                    remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}
-        
-      </h2>
       <div class="progressBarContainer">
         <div class="progressBar">
           <div class="progressBarRect">
