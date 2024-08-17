@@ -233,7 +233,10 @@
             
             
             
-                11 hours 58 minutes
+                {% if not user.expire %}∞{% else %}{% set
+                                    remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{
+                                    remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif
+                                    %}
             
         
       </h2>
