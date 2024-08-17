@@ -230,11 +230,11 @@
             {% if not user.expire %}∞{% else %}{% set
                                     remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{
                                     remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif
-                                    %}
+                                    %} Days
             
         
       </h2>
-      <h2 class="profile-card__bio-title"> Remaining Time:{expireDate: ''}
+      <h2 class="profile-card__bio-title"> Remaining Time: {{ user.expire | datetime }}{% endif %}
         
       </h2>
       <div class="progressBarContainer">
