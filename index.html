@@ -211,9 +211,44 @@
         width: 5%;
       }
     }
+                .topbar {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: white;
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                    transition: background-color 0.3s;
+                }
+                .topbar.dark-theme {
+                    background-color: #0056b3;
+                }
+                .topbar h1 {
+                    margin: 0;
+                    font-size: 1.5rem;
+                }
+                .topbar p {
+                    margin: 0;
+                    font-size: 1rem;
+                }
+                .theme-toggle {
+                    cursor: pointer;
+                    font-size: 1.5rem;
+                }
   </style>
 
 </head>
+                <div class="topbar">
+                    <div>
+                        <h1>404 VPN</h1>
+                        <p>Your Gateway to Secure and Free Internet Access</p>
+                    </div>
+                    <div class="theme-toggle" id="theme-toggle">
+                        <i class="bi bi-moon-fill"></i>
+                    </div>
+                </div>
 
 <body>
   <div class="profile-card">
