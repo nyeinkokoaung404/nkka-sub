@@ -197,7 +197,7 @@
     }
     @-webkit-keyframes progressLineTransmission {
       from {
-        width: 5%;
+        width: { user.data_limit } + '%';
       }
       to {
         width: { user.used_traffic } + '%';
@@ -205,7 +205,7 @@
     }
     @keyframes progressLineTransmission {
       from {
-        width: 5%;
+        width: { user.data_limit } + '%';
       }
       to {
         width: { user.used_traffic } + '%';
@@ -230,7 +230,7 @@
             {% if not user.expire %}∞{% else %}{% set
                                     remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{
                                     remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif
-                                    %}
+                                    %} + 'Days'
             
         
       </h2>
