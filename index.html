@@ -197,8 +197,7 @@
         width: 5%;
       }
       to {
-        width: {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
-                                    endif %};
+        width: 5%;
       }
     }
     @keyframes progressLineTransmission {
@@ -206,8 +205,7 @@
         width: 5%;
       }
       to {
-        width: {{ user.used_traffic | bytesformat
-                                    }};
+        width: {% endif %};
       }
     }
   </style>
