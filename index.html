@@ -196,21 +196,19 @@
       right: 0;
     }
     @-webkit-keyframes progressLineTransmission {
-      from {
-        width: 5%;
-      }
-      to {
-        width: {{ user.used_traffic }};
-      }
-    }
+            0% { color: #ff0000; } /* Red */
+            25% { color: #00ff00; } /* Green */
+            50% { color: #0000ff; } /* Blue */
+            75% { color: #ffff00; } /* Yellow */
+            100% { color: #ff00ff; } /* Magenta */
+        }
     @keyframes progressLineTransmission {
-      from {
-        width: 5%;
-      }
-      to {
-        width: 100%;
-      }
-    }
+            0% { color: #ff0000; } /* Red */
+            25% { color: #00ff00; } /* Green */
+            50% { color: #0000ff; } /* Blue */
+            75% { color: #ffff00; } /* Yellow */
+            100% { color: #ff00ff; } /* Magenta */
+        }
   </style>
 
 </head>
