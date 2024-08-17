@@ -187,7 +187,7 @@
       margin-top: 8px;
       font-size: 12px;
       font-weight: 900;
-      position: fixed;
+      position: static;
     }
     .progressBarPoint--start {
       left: 0;
@@ -234,10 +234,9 @@
             
         
       </h2>
-                            <div class="dark:text-white text-black mt-4 text-center"><span class="font-bold"
-                                    x-text="$t('expirationDate')"></span><span dir="ltr" x-data="{expireDate: ''}"
-                                    x-init="Alpine.data( 'expireDate', expireDate = expireDateVar )"
-                                    x-text="expireDate"></span></div>
+      <h2 class="profile-card__bio-title"> Remaining Time:{expireDate: ''}
+        
+      </h2>
       <div class="progressBarContainer">
         <div class="progressBar">
           <div class="progressBarRect">
