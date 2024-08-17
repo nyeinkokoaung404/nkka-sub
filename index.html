@@ -197,7 +197,7 @@
     }
     @-webkit-keyframes progressLineTransmission {
       from {
-        width: { user.data_limit }%;
+        width: 5%;
       }
       to {
         width: { user.used_traffic }%;
@@ -205,12 +205,27 @@
     }
     @keyframes progressLineTransmission {
       from {
-        width: { user.data_limit }%;
+        width: 5%;
       }
       to {
         width: { user.used_traffic }%;
       }
     }
+        
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 24px;
+            animation: rgbAnimation 3s infinite alternate;
+        }
+        @keyframes rgbAnimation {
+            0% { color: #ff0000; } /* Red */
+            25% { color: #00ff00; } /* Green */
+            50% { color: #0000ff; } /* Blue */
+            75% { color: #ffff00; } /* Yellow */
+            100% { color: #ff00ff; } /* Magenta */
+        }
   </style>
 
 </head>
@@ -220,45 +235,7 @@
     <img alt="Avatar Image" class="profile-card__avatar" src="https://images.weserv.nl/?url=https://raw.githubusercontent.com/Gozargah/Marzban-docs/master/screenshots/logo-dark.png?v=4&amp;h=300&amp;w=300&amp;fit=cover&amp;maxage=7d&amp;bg=000">
     <div class="profile-card__bio">
       <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
-      <div
-                    class="flex mb-8 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-3xl p-8 dark:text-white text-black flex-col sm:flex-row space-y-10 sm:space-y-0 sm:divide-x sm:rtl:divide-x-reverse sm:divide-blue-600/50">
-                    <div class="basis-1/3 space-y-5 flex flex-col items-center py-3 sm:ltr:pr-9 sm:rtl:pl-9" x-data>
-                        <h1>🚀 Panel {{ user.username }} 🚀</h1>
-                        <div x-text="calculatePercentage(dataUsed, dataLimit) + '%'"
-                            :class="getChartColor(calculatePercentage(dataUsed, dataLimit))"
-                            class="radial-progress font-black text-2xl" id="progress__bar" style="--size:9rem;
-                            --thickness: 1.2rem;"></div>
-                        <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #ffff00">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">HtetAung-MC</font></h4>
-                        <span
-                            class="px-4 py-2 rounded-full inline-block shadow-md shadow-green-900 font-bold text-gray-200"
-                            x-data="{status: '{{ user.status.value }}'}"
-                            x-text="[status == 'active' ? $t('active') : status == 'limited' ? $t('limited') : status == 'expired' ? $t('expired') : $t('disabled')]"
-                            :class="[status == 'active' ? 'bg-green-500' : status == 'limited' ? 'bg-red-600' : status == 'expired' ? 'bg-orange-600' : 'bg-gray-600']"></span>
-                    </div>
-                    <div x-data="{ usedTraffic: {{ user.used_traffic }}, dataLimit: {% if not user.data_limit %}∞{% else %}{{ user.data_limit }}{% endif %} }"
-                        class="basis-2/3 flex flex-row items-center sm:ltr:pl-9 sm:rtl:pr-9">
-                        <div class="data-usage w-full">
-                            <div class="dark:text-white text-black text-center mb-2"><span class="font-bold"
-                                    x-text="$t('dataUsage')"></span><span dir="ltr">{{ user.used_traffic | bytesformat
-                                    }} / {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
-                                    endif %}</span>
-                            </div>
-                            <div class="dark:text-white text-black mt-4 text-center"><span class="font-bold"
-                                    x-text="$t('expirationDate')"></span><span dir="ltr" x-data="{expireDate: ''}"
-                                    x-init="Alpine.data( 'expireDate', expireDate = expireDateVar )"
-                                    x-text="expireDate"></span></div>
-                            <!--2023/06/31 10:43:59-->
-                            <div class="dark:text-white text-black mt-3 text-sm text-center"
-                                x-text="resetInterval == 'year' ? $t('resetIntervalYear') : resetInterval == 'month' ? $t('resetIntervalMonth') : resetInterval == 'week' ? $t('resetIntervalWeek') : resetInterval == 'day' ? $t('resetIntervalDay') : ''">
-                            </div>
-                            <div class="dark:text-white text-black mt-5 text-center"><span class="font-bold"
-                                    x-text="$t('remainingDays')"></span><span>{% if not user.expire %}∞{% else %}{% set
-                                    remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{
-                                    remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif
-                                    %}</span><span x-text="$t('remainingDaysSufix')"></span></div>
-                        </div>
-                    </div>
-                </div>
+      <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #1cfd00">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
       <h1 class="profile-card__bio-name"> {{ user.status.value }} </h1>
       <h2 class="profile-card__bio-title"> Volume consumed: {{ user.used_traffic | bytesformat
                                     }}</h2><h2 class="profile-card__bio-title"> Total volume: {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
