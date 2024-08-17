@@ -208,7 +208,8 @@
         width: 5%;
       }
       to {
-        width: { user.used_traffic }{% endif %};
+        width: {{ user.used_traffic | bytesformat
+                                    }};
       }
     }
         
