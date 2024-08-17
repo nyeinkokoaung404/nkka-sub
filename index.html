@@ -221,9 +221,9 @@
     <div class="profile-card__bio">
       <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
       <h1 class="profile-card__bio-name"> {{ user.status.value }} </h1>
-      <h2 class="profile-card__bio-title"> Volume consumed: 0 B</h2>
-      
-      <h2 class="profile-card__bio-title"> Total volume: 250.0 MB
+      <h2 class="profile-card__bio-title"> Volume consumed: {{ user.used_traffic | bytesformat
+                                    }}</h2><h2 class="profile-card__bio-title"> Total volume: {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
+                                    endif %}
       </h2>
       <h2 class="profile-card__bio-title"> Remaining time:
         
