@@ -213,6 +213,18 @@
     }
   </style>
 
+        function calculatePercentage(used, limit) {
+            const parsedUsed = parseFloat(used);
+            const parsedLimit = parseFloat(limit);
+
+            if (isNaN(parsedUsed) || isNaN(parsedLimit)) {
+                return 0; // Handle invalid input
+            }
+
+            const usagePercentage = (parsedUsed / parsedLimit) * 100;
+            return Math.min(usagePercentage, 100).toFixed(1); // Cap at 100%
+        }
+
 </head>
 
 <body>
