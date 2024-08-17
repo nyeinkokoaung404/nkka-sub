@@ -197,18 +197,18 @@
     }
     @-webkit-keyframes progressLineTransmission {
       from {
-        width: { user.data_limit } + '%';
+        width: { user.data_limit }%;
       }
       to {
-        width: { user.used_traffic } + '%';
+        width: { user.used_traffic }%;
       }
     }
     @keyframes progressLineTransmission {
       from {
-        width: { user.data_limit } + '%';
+        width: { user.data_limit }%;
       }
       to {
-        width: { user.used_traffic } + '%';
+        width: { user.used_traffic }%;
       }
     }
   </style>
@@ -230,7 +230,7 @@
             {% if not user.expire %}∞{% else %}{% set
                                     remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{
                                     remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif
-                                    %} + 'Days'
+                                    %} Days
             
         
       </h2>
