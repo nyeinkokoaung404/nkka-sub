@@ -1,6 +1,6 @@
 <html lang="fa"><head>
   <meta charset="UTF-8">
-  <title>Subscription Info</title>
+  <title>{{ user.username }} Info</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -187,7 +187,7 @@
       margin-top: 8px;
       font-size: 12px;
       font-weight: 900;
-      position: absolute;
+      position: fixed;
     }
     .progressBarPoint--start {
       left: 0;
@@ -225,21 +225,19 @@
                                     }}</h2><h2 class="profile-card__bio-title"> Total volume: {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
                                     endif %}
       </h2>
-      <h2 class="profile-card__bio-title"> Remaining time:
+      <h2 class="profile-card__bio-title"> Remaining Date:
         
-            
-            
-            
-            
-            
-            
-                {% if not user.expire %}∞{% else %}{% set
+            {% if not user.expire %}∞{% else %}{% set
                                     remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{
                                     remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif
                                     %}
             
         
       </h2>
+                            <div class="dark:text-white text-black mt-4 text-center"><span class="font-bold"
+                                    x-text="$t('expirationDate')"></span><span dir="ltr" x-data="{expireDate: ''}"
+                                    x-init="Alpine.data( 'expireDate', expireDate = expireDateVar )"
+                                    x-text="expireDate"></span></div>
       <div class="progressBarContainer">
         <div class="progressBar">
           <div class="progressBarRect">
