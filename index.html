@@ -1,11 +1,14 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
   <meta charset="UTF-8">
   <title>{{ user.username }} Info</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;900&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;900&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -18,7 +21,7 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      direction: ltr;
+      direction: rtl;
     }
     .profile-card {
       position: relative;
@@ -190,17 +193,17 @@
       position: absolute;
     }
     .progressBarPoint--start {
-      left: 0;
+      right: 0;
     }
     .progressBarPoint--end {
-      right: 0;
+      left: 0;
     }
     @-webkit-keyframes progressLineTransmission {
       from {
         width: 5%;
       }
       to {
-        width: width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 5, 100] | max }}%{% else %}100%{% endif %};
+        width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 100, 5] | max }}%{% else %}100%{% endif %};
       }
     }
     @keyframes progressLineTransmission {
@@ -208,7 +211,7 @@
         width: 5%;
       }
       to {
-        width: width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 5, 100] | max }}%{% else %}100%{% endif %};;
+        width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 100, 5] | max }}%{% else %}100%{% endif %};
       }
     }
         
@@ -258,9 +261,9 @@
             {% set remaining_hours = (remaining_seconds % (24 * 3600)) // 3600 %}
             {% set remaining_minutes = (remaining_seconds % 3600) // 60 %}
             {% if remaining_days >= 1 %}
-                {{ remaining_days | int }} day {{ remaining_hours | int }} ساعت
+                {{ remaining_days | int }} day {{ remaining_hours | int }} hour
             {% else %}
-                {{ remaining_hours | int }} hour {{ remaining_minutes | int }} دقیقه
+                {{ remaining_hours | int }} hour {{ remaining_minutes | int }} minutes
             {% endif %}
         {% endif %}
       </h2>
