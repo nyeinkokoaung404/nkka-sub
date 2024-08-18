@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>{{ user.username }} Info</title>
+  <title>{{ urlencode }} Info</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -238,7 +238,7 @@
     <img alt="Avatar Image" class="profile-card__avatar" src="https://images.weserv.nl/?url=https://iam404.serv00.net/404.png?v=4&amp;h=300&amp;w=300&amp;fit=cover&amp;maxage=7d&amp;bg=000">
     <div class="profile-card__bio">
       <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
-      <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #1cfd00">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
+      <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #0000ff">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
       <h1 class="profile-card__bio-name"> {{ user.status.value }} </h1>
       <h2 class="profile-card__bio-title"> Volume consumed: {{ user.used_traffic | bytesformat }}</h2>
       {% if user.data_limit_reset_strategy != 'no_reset' %}
@@ -291,7 +291,7 @@
           <a class="profile-card__links-button" href="v2box://install-sub?url={{ user.subscription_url }}&name={{ user.username }}" rel="noopener noreferrer" target="_blank">Add to V2BOX</a>
           <a class="profile-card__links-button" href="v2rayng://install-config?url=/sub/{{ user.subscription_url }}" rel="noopener noreferrer" target="_blank">Add to v2rayNG</a>
           <a class="profile-card__links-button" href="sn://subscription?url=/sub/{{ user.subscription_url }};name={{ user.username }}" rel="noopener noreferrer" target="_blank">Add to NekoBox</a>
-          <a class="profile-card__links-button" href="streisand://import/${window.location.origin}{{ urlencode }}" rel="noopener noreferrer" target="_blank">Add to Streisand</a>
+          <a class="profile-card__links-button" href="streisand://import/{{ urlencode }}" rel="noopener noreferrer" target="_blank">Add to Streisand</a>
           <a class="profile-card__links-button" href="foxray://yiguo.dev/sub/add/?url={{ user.subscription_url }}#{{ user.username }}" rel="noopener noreferrer" target="_blank">Add to FoXray</a>
           
         </div>
