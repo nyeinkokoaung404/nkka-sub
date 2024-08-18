@@ -286,12 +286,12 @@
           Quick add subscription link
         </label>
         <div class="accordion-content">
-          <a class="profile-card__links-button" href="hiddify://import/{{ user.subscription_url }}#{{ user.username | urlencode }}" rel="noopener noreferrer" target="_blank">Add to hiddify</a>
+          <a class="profile-card__links-button" href="hiddify://import/{{ user.subscription_url }}#{{ user.username }}" rel="noopener noreferrer" target="_blank">Add to hiddify</a>
           <a class="profile-card__links-button" href="sing-box://import-remote-profile?url=/sub/{{ user.subscription_url }}#{{ user.username }}" rel="noopener noreferrer" target="_blank">Add to sing-box</a>
           <a class="profile-card__links-button" href="v2box://install-sub?url={{ user.subscription_url }}&name={{ user.username }}" rel="noopener noreferrer" target="_blank">Add to V2BOX</a>
           <a class="profile-card__links-button" href="v2rayng://install-config?url=/sub/{{ user.subscription_url }}" rel="noopener noreferrer" target="_blank">Add to v2rayNG</a>
           <a class="profile-card__links-button" href="sn://subscription?url=/sub/{{ user.subscription_url }};name={{ user.username }}" rel="noopener noreferrer" target="_blank">Add to NekoBox</a>
-          <a class="profile-card__links-button" href="streisand://import/${window.location.origin}{{ user.subscription_url }}" rel="noopener noreferrer" target="_blank">Add to Streisand</a>
+          <a class="profile-card__links-button" href="streisand://import/${window.location.origin}{{ urlencode }}" rel="noopener noreferrer" target="_blank">Add to Streisand</a>
           <a class="profile-card__links-button" href="foxray://yiguo.dev/sub/add/?url={{ user.subscription_url }}#{{ user.username }}" rel="noopener noreferrer" target="_blank">Add to FoXray</a>
           
         </div>
@@ -319,6 +319,7 @@
         </label>
         <div class="accordion-content">
           <a class="profile-card__links-button" href="https://apps.apple.com/us/app/sing-box/id6451272673" rel="noopener noreferrer" target="_blank">sing-box</a>
+          <a class="profile-card__links-button" href="https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690" rel="noopener noreferrer" target="_blank">V2BOX</a>
           <a class="profile-card__links-button" href="https://apps.apple.com/us/app/streisand/id6450534064" rel="noopener noreferrer" target="_blank">Streisand</a>
           <a class="profile-card__links-button" href="https://apps.apple.com/us/app/shadowrocket/id932747118" rel="noopener noreferrer" target="_blank">Shadowrocket 3$</a>
         </div>
@@ -340,7 +341,7 @@
       <div class="accordion">
         <input type="checkbox" name="dev" id="dev">
         <label class="profile-card__header" for="dev">
-          If there are any problems with subscription, please contact support on Telegram (or) Facebook.
+          If there are any problems with subscription, please contact on Telegram (or) Facebook.
         </label>
         <div class="accordion-content">
           <a class="profile-card__links-button" href="https://t.me/nkka404" rel="noopener noreferrer" target="_blank">Telegram</a>
