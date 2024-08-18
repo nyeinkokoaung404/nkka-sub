@@ -200,7 +200,7 @@
         width: 5%;
       }
       to {
-        width: width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 100, 5] | max }}%{% else %}100%{% endif %};
+        width: width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 5, 100] | max }}%{% else %}100%{% endif %};
       }
     }
     @keyframes progressLineTransmission {
@@ -208,7 +208,7 @@
         width: 5%;
       }
       to {
-        width: width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 100, 5] | max }}%{% else %}100%{% endif %};;
+        width: width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 5, 100] | max }}%{% else %}100%{% endif %};;
       }
     }
         
@@ -237,18 +237,32 @@
       <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
       <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #1cfd00">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
       <h1 class="profile-card__bio-name"> {{ user.status.value }} </h1>
-      <h2 class="profile-card__bio-title"> Volume consumed: {{ user.used_traffic | bytesformat
-                                    }}</h2><h2 class="profile-card__bio-title"> Total volume: {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
-                                    endif %}
+      <h2 class="profile-card__bio-title"> Volume consumed: {{ user.used_traffic | bytesformat }}</h2>
+      {% if user.data_limit_reset_strategy != 'no_reset' %}
+      <h2 class="profile-card__bio-title" style="direction: ltr;">
+        (resets every {{ user.data_limit_reset_strategy.value }})
       </h2>
-      <h2 class="profile-card__bio-title"> Remaining Date:
-        
-            {% if not user.expire %}∞{% else %}{% set
-                                    remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{
-                                    remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif
-                                    %} Days
-            
-        
+      {% endif %}
+      <h2 class="profile-card__bio-title"> Total volume: {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{% endif %}</h2>
+      <h2 class="profile-card__bio-title"> Remaining time:
+        {% if not user.expire and not user.on_hold_expire_duration %}
+        ∞
+        {% else %}
+            {% if user.status.value == 'on_hold' %}
+              {% set remaining_seconds = [user.on_hold_expire_duration, 0] | max %}
+            {% else %}
+              {% set current_timestamp = now().timestamp() %}
+              {% set remaining_seconds = [user.expire - current_timestamp, 0] | max %}
+            {% endif %}
+            {% set remaining_days = remaining_seconds // (24 * 3600) %}
+            {% set remaining_hours = (remaining_seconds % (24 * 3600)) // 3600 %}
+            {% set remaining_minutes = (remaining_seconds % 3600) // 60 %}
+            {% if remaining_days >= 1 %}
+                {{ remaining_days | int }} day {{ remaining_hours | int }} ساعت
+            {% else %}
+                {{ remaining_hours | int }} hour {{ remaining_minutes | int }} دقیقه
+            {% endif %}
+        {% endif %}
       </h2>
       <div class="progressBarContainer">
         <div class="progressBar">
