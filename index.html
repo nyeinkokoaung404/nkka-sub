@@ -352,6 +352,51 @@
     
     </div>
   </div>
+  <script>
+    async function getLatestReleaseName(url) {
+      if (!url || typeof url !== 'string') {
+        throw new Error('A valid URL must be provided.');
+      }
 
+      try {
+        const response = await fetch(url);
 
-</body></html>
+        if (!response.ok) {
+          throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        const latest = await response.json();
+
+        if ((!latest || !latest.tag_name) && (!latest || !latest.name)) {
+          throw new Error('The response does not contain the expected data.');
+        }
+
+        return latest.name || latest.tag_name;
+      } catch (error) {
+        console.error('Error fetching the latest release name:', error);
+        throw error;
+      }
+    }
+
+    const singbox = 'https://api.github.com/repos/SagerNet/sing-box/releases/latest';
+    const v2rayng = 'https://api.github.com/repos/2dust/v2rayNG/releases/latest';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const sfaName = await getLatestReleaseName(singbox);
+        const sfa = document.getElementById('SFA');
+        sfa.href = `https://github.com/SagerNet/sing-box/releases/download/v${sfaName}/SFA-${sfaName}-universal.apk`;
+
+        const v2rayngName = await getLatestReleaseName(v2rayng);
+        const v2rayngv8a = document.getElementById('v2rayNGv8a');
+        v2rayngv8a.href = `https://github.com/2dust/v2rayNG/releases/download/${v2rayngName}/v2rayNG_${v2rayngName}_arm64-v8a.apk`;
+        const v2rayngv7a = document.getElementById('v2rayNGv7a');
+        v2rayngv7a.href = `https://github.com/2dust/v2rayNG/releases/download/${v2rayngName}/v2rayNG_${v2rayngName}_armeabi-v7a.apk`;
+      } catch (error) {
+        console.error('Failed to update link:', error);
+      }
+    });
+  </script>
+</body>
+
+</html>
