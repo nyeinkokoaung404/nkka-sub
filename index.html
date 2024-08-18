@@ -308,46 +308,6 @@
         </div>
       </div>
       <div class="profile-card__separator"></div>
-      <div class="accordion">
-        <input type="checkbox" name="android" id="android">
-        <label class="profile-card__header" for="android">
-          Application required for Android
-        </label>
-        <div class="accordion-content">
-          <a class="profile-card__links-button" href="https://github.com/SagerNet/sing-box/releases/download/v1.8.11/SFA-1.8.11-universal.apk" rel="noopener noreferrer" target="_blank">sing-box</a>
-          <a class="profile-card__links-button" href="https://github.com/2dust/v2rayNG/releases/download/1.8.19/v2rayNG_1.8.19.apk" rel="noopener noreferrer" target="_blank">v2rayNG - GitHub</a>
-          <a class="profile-card__links-button" href="https://play.google.com/store/apps/details?id=com.v2ray.ang" rel="noopener noreferrer" target="_blank">v2rayNG - Google Play</a>
-          <a class="profile-card__links-button" href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Android-universal.apk" rel="noopener noreferrer" target="_blank">Hiddify Next</a>
-          <a class="profile-card__links-button" href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.3.1/NB4A-1.3.1-arm64-v8a.apk" rel="noopener noreferrer" target="_blank">NekoBox v8a</a>
-          <a class="profile-card__links-button" href="https://github.com/MatsuriDayo/NekoBoxForAndroid/releases/download/1.3.1/NB4A-1.3.1-armeabi-v7a.apk" rel="noopener noreferrer" target="_blank">NekoBox v7a</a>
-        </div>
-      </div>
-      <div class="profile-card__separator"></div>
-      <div class="accordion">
-        <input type="checkbox" name="ios" id="ios">
-        <label class="profile-card__header" for="ios">
-          Application required for iOS
-        </label>
-        <div class="accordion-content">
-          <a class="profile-card__links-button" href="https://apps.apple.com/us/app/sing-box/id6451272673" rel="noopener noreferrer" target="_blank">sing-box</a>
-          <a class="profile-card__links-button" href="https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690" rel="noopener noreferrer" target="_blank">V2BOX</a>
-          <a class="profile-card__links-button" href="https://apps.apple.com/us/app/streisand/id6450534064" rel="noopener noreferrer" target="_blank">Streisand</a>
-          <a class="profile-card__links-button" href="https://apps.apple.com/us/app/shadowrocket/id932747118" rel="noopener noreferrer" target="_blank">Shadowrocket 3$</a>
-        </div>
-      </div>
-      <div class="profile-card__separator"></div>
-      <div class="accordion">
-        <input type="checkbox" name="windows" id="windows">
-        <label class="profile-card__header" for="windows">
-          Program required for Windows
-        </label>
-        <div class="accordion-content">
-          <a class="profile-card__links-button" href="https://github.com/2dust/v2rayN/releases/download/6.43/zz_v2rayN-With-Core-SelfContained.7z" rel="noopener noreferrer" target="_blank">v2rayN</a>
-          <a class="profile-card__links-button" href="https://github.com/MatsuriDayo/nekoray/releases/download/3.26/nekoray-3.26-2023-12-09-windows64.zip" rel="noopener noreferrer" target="_blank">nekoray</a>
-          <a class="profile-card__links-button" href="https://github.com/hiddify/hiddify-next/releases/latest/download/Hiddify-Windows-Portable-x64.zip" rel="noopener noreferrer" target="_blank">Hiddify Next</a>
-        </div>
-      </div>
-      <div class="profile-card__separator"></div>
       <h1 class="profile-card__bio-name"> Contact to developer </h1>
       <div class="accordion">
         <input type="checkbox" name="dev" id="dev">
@@ -361,52 +321,8 @@
       </div>
       <div class="profile-card__separator"></div>
       
-    <script>
-    async function getLatestReleaseName(url) {
-      if (!url || typeof url !== 'string') {
-        throw new Error('A valid URL must be provided.');
-      }
-
-      try {
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-
-        const latest = await response.json();
-
-        if ((!latest || !latest.tag_name) && (!latest || !latest.name)) {
-          throw new Error('The response does not contain the expected data.');
-        }
-
-        return latest.name || latest.tag_name;
-      } catch (error) {
-        console.error('Error fetching the latest release name:', error);
-        throw error;
-      }
-    }
-
-    const singbox = 'https://api.github.com/repos/SagerNet/sing-box/releases/latest';
-    const v2rayng = 'https://api.github.com/repos/2dust/v2rayNG/releases/latest';
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      try {
-        const sfaName = await getLatestReleaseName(singbox);
-        const sfa = document.getElementById('SFA');
-        sfa.href = `https://github.com/SagerNet/sing-box/releases/download/v${sfaName}/SFA-${sfaName}-universal.apk`;
-
-        const v2rayngName = await getLatestReleaseName(v2rayng);
-        const v2rayngv8a = document.getElementById('v2rayNGv8a');
-        v2rayngv8a.href = `https://github.com/2dust/v2rayNG/releases/download/${v2rayngName}/v2rayNG_${v2rayngName}_arm64-v8a.apk`;
-        const v2rayngv7a = document.getElementById('v2rayNGv7a');
-        v2rayngv7a.href = `https://github.com/2dust/v2rayNG/releases/download/${v2rayngName}/v2rayNG_${v2rayngName}_armeabi-v7a.apk`;
-      } catch (error) {
-        console.error('Failed to update link:', error);
-      }
-    });
-  </script>
   <script>
+    
         const dataLimit = "{% if not user.data_limit %}∞{% else %}{{ user.data_limit }}{% endif %}";
         const dataUsed = "{{ user.used_traffic }}";
         const expireDateInit = "{% if user.status.value == 'on_hold' %}-{% elif not user.expire %}∞{% else %}{% set current_timestamp = now().timestamp() %}{{ user.expire | datetime }}{% endif %}";
@@ -596,65 +512,8 @@
                 import: "Import to app",
                 autoImport: "Auto Import",
             },
-            fa: {
-                active: "فعال",
-                limited: "تمام شده",
-                expired: "پایان یافته",
-                disabled: "غیرفعال",
-                onHold: "در انتظار",
-                dataUsage: "مصرف داده: ",
-                expirationDate: "تاریخ پایان: ",
-                resetIntervalDay: "(ریست روزانه)",
-                resetIntervalWeek: "(ریست هفتگی)",
-                resetIntervalMonth: "(ریست ماهانه)",
-                resetIntervalYear: "(ریست سالانه)",
-                remainingDays: "روزهای باقی‌مانده: ",
-                remainingDaysSufix: " روز",
-                links: "لینک‌ها",
-                apps: "برنامه‌ها",
-                tutorials: "آموزش‌ها",
-                subscription: "لینک اشتراک",
-                language: "زبان",
-                settings: "تنظیمات",
-                darkMode: "تم تیره",
-                copyAll: "کپی همه",
-                proxy: "پروکسی",
-                tutorial: "آموزش",
-                download: "دانلود",
-                support: "پشتیبانی تلگرام",
-                import: "افزودن به نرم افزار",
-                autoImport: "افزودن خودکار",
-            },
-            ru: {
-                active: "активный",
-                limited: "ограниченное",
-                expired: "истекший",
-                disabled: "не активный",
-                onHold: "на удерживании",
-                dataUsage: "Использование данных: ",
-                expirationDate: "Дата окончания срока: ",
-                resetIntervalDay: "(сбрасывает каждый день)",
-                resetIntervalWeek: "(сбрасывается каждую неделю)",
-                resetIntervalMonth: "(сбрасывается каждый месяц)",
-                resetIntervalYear: "(сбрасывается каждый год)",
-                remainingDays: "оставшиеся дни: ",
-                remainingDaysSufix: " дни",
-                links: "ссылки",
-                apps: "Программы",
-                tutorials: "учебники",
-                subscription: "подписка",
-                language: "язык",
-                settings: "настройки",
-                darkMode: "тёмный режим",
-                copyAll: "скопировать все",
-                proxy: "прокси",
-                tutorial: "руководство",
-                download: "скачать",
-                support: "Поддержка телеграмм",
-                import: "Импортировать в приложение",
-                autoImport: "Автоматический импорт",
-            },
         };
+    
         let settings = {
             darkMode: 1,
             language: "en",
@@ -1014,7 +873,7 @@
             popup.removeClass( "hidden" );
         }
     </script>
-      
+      <div class="profile-card__separator"></div>
     </div>
   </div>
 </body>
