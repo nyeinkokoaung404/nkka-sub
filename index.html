@@ -528,35 +528,6 @@
                 import: "افزودن به نرم افزار",
                 autoImport: "افزودن خودکار",
             },
-            ru: {
-                active: "активный",
-                limited: "ограниченное",
-                expired: "истекший",
-                disabled: "не активный",
-                onHold: "на удерживании",
-                dataUsage: "Использование данных: ",
-                expirationDate: "Дата окончания срока: ",
-                resetIntervalDay: "(сбрасывает каждый день)",
-                resetIntervalWeek: "(сбрасывается каждую неделю)",
-                resetIntervalMonth: "(сбрасывается каждый месяц)",
-                resetIntervalYear: "(сбрасывается каждый год)",
-                remainingDays: "оставшиеся дни: ",
-                remainingDaysSufix: " дни",
-                links: "ссылки",
-                apps: "Программы",
-                tutorials: "учебники",
-                subscription: "подписка",
-                language: "язык",
-                settings: "настройки",
-                darkMode: "тёмный режим",
-                copyAll: "скопировать все",
-                proxy: "прокси",
-                tutorial: "руководство",
-                download: "скачать",
-                support: "Поддержка телеграмм",
-                import: "Импортировать в приложение",
-                autoImport: "Автоматический импорт",
-            },
         };
         let settings = {
             darkMode: 1,
@@ -595,7 +566,7 @@
             else return '';
         }
     </script>
-</head>
+
 <body :class="settings.darkMode == 1 ? 'dark' : ''" x-data>
     <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-main-light dark:bg-main-dark sm:py-6 transition" id="page-container">
         <div class="relative bg-sub-light dark:bg-sub-dark px-6 pt-10 pb-8 shadow-main-sh dark:shadow-main-sh-dark sm:mx-auto sm:rounded-xl sm:px-10 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-0 w-full max-w-2xl">
@@ -603,30 +574,9 @@
                 <div class="flex flex-col sm:flex-row space-y-10 sm:space-y-0 sm:divide-x sm:rtl:divide-x-reverse sm:divide-blue-600/50">
                     <div class="basis-1/3 space-y-5 flex flex-col items-center py-3 sm:ltr:pr-9 sm:rtl:pl-9" x-data>
                         <img src="https://cdn.jsdelivr.net/gh/MuhammadAshouri/marzban-templates@master/template-01/images/marzban.svg" class="w-28" />
-                        <span class="inline-block dark:text-white text-black font-semibold text-lg">{{ user.username }}</span>
-                        <span class="px-4 py-2 rounded-full inline-block shadow-md shadow-green-900 font-bold text-gray-200" x-data="{status: '{{ user.status.value }}'}" x-text="[status == 'active' ? $t('active') : status == 'limited' ? $t('limited') : status == 'expired' ? $t('expired') : status == 'on_hold' ? $t('onHold') : $t('disabled')]" :class="[status == 'active' ? 'bg-blue-600' : status == 'limited' ? 'bg-red-600' : status == 'expired' ? 'bg-orange-600' : 'bg-gray-600']"></span>
-                        <span class="flex cursor-pointer" onclick="openSettings()">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 h-6 stroke-blue-600 drop-shadow-lg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                            <span class="text-blue-600 drop-shadow-lg rtl:mr-2 ltr:ml-2" x-text="$t('settings')"></span>
-                        </span>
-                        <a class="rounded-md shadow-lg transition duration-300 bg-blue-600 text-white text-center text-lg py-2 w-4/5 cursor-pointer hover:shadow-xl stroke-blue-600" x-text="$t('proxy')" x-show="settings.proxy != ''" x-bind:href="settings.proxy"></a>
-                    </div>
-                    <div class="basis-2/3 flex flex-row items-center sm:ltr:pl-9 sm:rtl:pr-9">
-                        <div class="data-usage w-full" x-data="progressBar" x-init="Alpine.data( 'progressBar', () => progressBar )">
-                            <div class="dark:text-white text-black text-center"><span class="font-bold" x-text="$t('dataUsage')"></span><span dir="ltr">{{ user.used_traffic | bytesformat }} / {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{% endif %}</span></div>
-                            <div class="bg-gray-200 dark:bg-gray-900 rounded-full h-6 mt-5 drop-shadow-lg overflow-hidden" role="progressbar" :aria-valuenow="width" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar rounded-full h-6 text-center w-full dark:text-white text-black text-sm transition leading-6" :class="color" :style="`width: ${width}%; transition: width 2s;`">
-                                    <span class="absolute w-full left-0" x-text="`${width}%`"></span>
-                                </div>
-                            </div>
-                            <div class="dark:text-white text-black mt-10 text-center"><span class="font-bold" x-text="$t('expirationDate')"></span><span dir="ltr" x-data="{expireDate: ''}" x-init="Alpine.data( 'expireDate', expireDate = expireDateVar )" x-text="expireDate"></span></div>
-                            <!--2023/06/31 10:43:59-->
-                            <div class="dark:text-white text-black mt-3 text-sm text-center" x-text="resetInterval == 'year' ? $t('resetIntervalYear') : resetInterval == 'month' ? $t('resetIntervalMonth') : resetInterval == 'week' ? $t('resetIntervalWeek') : resetInterval == 'day' ? $t('resetIntervalDay') : ''"></div>
-                            <div class="dark:text-white text-black mt-5 text-center"><span class="font-bold" x-text="$t('remainingDays')"></span><span>{% if user.status.value == 'on_hold' %}-{% elif not user.expire %}∞{% else %}{% set remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{ remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif %}</span><span x-text="$t('remainingDaysSufix')"></span></div>
-                        </div>
+                        
+                        
+                    
                     </div>
                 </div>
                 <a class="rounded-md shadow-lg border-blue-600 border-2 text-black dark:text-white text-lg my-6 cursor-pointer h-16 flex flex-row justify-center items-center" x-show="settings.support != ''" x-bind:href="settings.support" target="_blank">
