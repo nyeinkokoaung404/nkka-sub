@@ -200,7 +200,7 @@
         width: 5%;
       }
       to {
-        width: ;
+        width: width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 100, 5] | max }}%{% else %}100%{% endif %};
       }
     }
     @keyframes progressLineTransmission {
@@ -208,7 +208,7 @@
         width: 5%;
       }
       to {
-        width: ;
+        width: width: {% if user.data_limit %}{{ [(user.used_traffic / user.data_limit) * 100, 5] | max }}%{% else %}100%{% endif %};;
       }
     }
         
