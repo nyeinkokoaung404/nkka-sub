@@ -637,10 +637,10 @@
                                         </div>
                                     </div>
                                 </li>
-                               <!-- {% endfor %} -->
-                              <li class="rounded-md m-3 shadow-lg transition duration-300 bg-blue-600 text-white text-center text-lg py-2 mt-3 cursor-pointer hover:shadow-2xl copyAllButton stroke-blue-600" x-text="$t('copyAll')"></li>
+                               {% endfor %}
+                              <li class="rounded-md m-3 shadow-lg transition duration-300 bg-blue-600 text-white text-center text-lg py-2 mt-3 cursor-pointer hover:shadow-2xl copyAllButton stroke-blue-600" x-data="{link: '{{ user.subscription_url }}'} x-text="$t('copyAll')"></li>
                                 <!-- </div> -->
-                                {{ user.subscription_url }}
+                                {% endif %}
                             </ul>
                         </div>
                         <div class="hidden" id="apps" role="tabpanel" aria-labelledby="apps-tab">
