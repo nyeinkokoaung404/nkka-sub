@@ -572,12 +572,7 @@
         <div class="relative bg-sub-light dark:bg-sub-dark px-6 pt-10 pb-8 shadow-main-sh dark:shadow-main-sh-dark sm:mx-auto sm:rounded-xl sm:px-10 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-0 w-full max-w-2xl">
             <div class="mx-auto max-w-xl">
                 <div class="flex flex-col sm:flex-row space-y-10 sm:space-y-0 sm:divide-x sm:rtl:divide-x-reverse sm:divide-blue-600/50">
-                    <div class="basis-1/3 space-y-5 flex flex-col items-center py-3 sm:ltr:pr-9 sm:rtl:pl-9" x-data>
-                        <img src="https://cdn.jsdelivr.net/gh/MuhammadAshouri/marzban-templates@master/template-01/images/marzban.svg" class="w-28" />
-                        
-                        
                     
-                    </div>
                 </div>
                 <a class="rounded-md shadow-lg border-blue-600 border-2 text-black dark:text-white text-lg my-6 cursor-pointer h-16 flex flex-row justify-center items-center" x-show="settings.support != ''" x-bind:href="settings.support" target="_blank">
                     <svg class="h-12 ltr:mr-3 rtl:ml-3" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -626,7 +621,7 @@
                     <div id="tabs-content">
                         <div class="hidden" id="links" role="tabpanel" aria-labelledby="links-tab">
                             <ul class="list-none p-0 m-0">
-                                <li class="flex px-3 mb-3 justify-between leading-[3.5rem] shadow-lg bg-black/20 rounded-md" x-data="{link: '{{ user.subscription_url }}'}">
+                              <!--  <li class="flex px-3 mb-3 justify-between leading-[3.5rem] shadow-lg bg-black/20 rounded-md" x-data="{link: '{{ user.subscription_url }}'}">
                                     <span class="font-semibold flex-1 dark:text-gray-200 text-black cursor-default" x-text="$t('subscription')"></span>
                                     <div class="flex justify-between items-center">
                                         <a class="w-8 h-8 ltr:mr-3 rtl:ml-3 cursor-pointer" x-data x-show="settings.autoImportUserLink != ''" :href="settings.autoImportUserLink + '{{ user.subscription_url }}'">
@@ -652,7 +647,7 @@
                                 {% if user.status == 'active' %}
                                 <!-- <div class="bg-black/20 rounded-md shadow-lg pt-3 pb-1"> -->
                                 {% for link in user.links %}
-                                <li class="flex px-3 mb-1 justify-between leading-[3.5rem] rounded-md transition duration-300" x-data="{link: '{{ link }}'}">
+                                <li class="flex px-3 mb-1 justify-between leading-[3.5rem] rounded-md transition duration-300" x-data="{link: '{{ user.subscription_url }}'}">
                                     <span class="font-semibold flex-1 dark:text-gray-200 text-black cursor-default" x-text="getRemark(link)"></span>
                                     <div class="flex justify-between items-center">
                                         <div class="w-8 h-8 ltr:mr-3 rtl:ml-3 cursor-pointer" x-data="{copyColor: 'stroke-blue-600'}" @click="() => { navigator.clipboard.writeText( link ); copyColor = 'stroke-green-600'; setTimeout(() => copyColor = 'stroke-blue-600', 2000); }">
@@ -669,7 +664,7 @@
                                     </div>
                                 </li>
                                 {% endfor %}
-                                <li class="rounded-md m-3 shadow-lg transition duration-300 bg-blue-600 text-white text-center text-lg py-2 mt-3 cursor-pointer hover:shadow-2xl copyAllButton stroke-blue-600" x-text="$t('copyAll')"></li>
+                              <li class="rounded-md m-3 shadow-lg transition duration-300 bg-blue-600 text-white text-center text-lg py-2 mt-3 cursor-pointer hover:shadow-2xl copyAllButton stroke-blue-600" x-text="$t('copyAll')"></li>
                                 <!-- </div> -->
                                 {% endif %}
                             </ul>
