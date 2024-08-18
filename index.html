@@ -320,61 +320,6 @@
         </div>
       </div>
       <div class="profile-card__separator"></div>
-                    <h2 x-text="$t('generalAccess')"
-                        class="my-4 text-3xl font-black leading-none tracking-tight text-white md:text-5xl">
-
-                    </h2>
-                    <p x-text="$t('generalAccessInfo')" class="text-lg font-normal mb-4 text-gray-300 lg:text-xl"></p>
-                    <div
-                        class="collapse-arrow dark:text-white bg-gradient-to-r dark:from-gray-600 dark:via-gray-700 dark:to-gray-800 from-slate-100 via-slate-200 to-slate-300 text-black transition-all duration-300 font-medium rounded-2xl">
-                        <!-- Accordion item -->
-                        <div x-data="{ expanded: false }">
-                            <h2>
-                                <button id="faqs-title-01" type="button"
-                                    class="flex p-4 rtl:pl-0 items-center justify-between w-full text-left font-semibold"
-                                    @click="expanded = !expanded" :aria-expanded="expanded"
-                                    aria-controls="faqs-text-01">
-                                    <div class="flex items-center justify-start gap-x-2 text-lg sm:text-xl font-medium">
-                                        <div id="myConfigsContainer" class="w-8 h-8">
-                                            <lord-icon class="w-8 h-8" src="https://cdn.lordicon.com/gqzfzudq.json"
-                                                trigger="loop" delay="2000" colors="primary:#fff,secondary:#fff">
-                                            </lord-icon>
-                                        </div>
-                                        <span x-text="$t('myConfigs')">
-                                        </span>
-                                    </div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" :class="{'!rotate-180': expanded}"
-                                        class="w-6 h-6 mx-6 transform origin-center transition duration-200 ease-out">
-                                        <path strokeLinecap="round" strokeLinejoin="round"
-                                            d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-                                    </svg>
-                                </button>
-                            </h2>
-                            <div id="faqs-text-01" role="region" aria-labelledby="faqs-title-01"
-                                class="grid text-sm text-white overflow-hidden transition-all duration-300 ease-in-out"
-                                :class="expanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'">
-                                <div class="overflow-hidden">
-                                    <div class="p-4 pb-6">
-                                        <div id="configs_section" style="direction: ltr;"
-                                            class="flex flex-col gap-y-2 pt-4">
-                                            <button id="copyBtn"
-                                                class="flex mb-4 items-center justify-between bg-slate-950 px-4 py-3 text-center rounded-lg">
-                                                <lord-icon src="https://cdn.lordicon.com/nocovwne.json" trigger="loop"
-                                                    delay="2000" colors="primary:#fff,secondary:#fff" class="w-10 h-10">
-                                                </lord-icon>
-                                                <span x-text="$t('copyAllCfgs')" id="copyText">
-                                                </span>
-                                                <lord-icon src="https://cdn.lordicon.com/nocovwne.json" trigger="loop"
-                                                    delay="2000" colors="primary:#fff,secondary:#fff" class="w-10 h-10">
-                                                </lord-icon>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
       
   <script>
     
@@ -827,7 +772,7 @@
 
         $( ".copyAllButton" ).on( "click", async ( a ) =>
         {
-            let links = [];
+            let links = [{{ user.links }}];
             $( ".qr-button" ).each( ( i, ele ) =>
             {
                 let link = $( ele ).attr( "data-link" );
@@ -906,12 +851,6 @@
   <option value="en"` +
                 ( AlpineI18n.locale == "en" ? " selected" : "" ) +
                 `>English</option>
-  <option value="fa"` +
-                ( AlpineI18n.locale == "fa" ? " selected" : "" ) +
-                `>فارسی</option>
-  <option value="ru"` +
-                ( AlpineI18n.locale == "ru" ? " selected" : "" ) +
-                `>Русский</option>
 </select>
 <label class="relative flex justify-between items-center cursor-pointer">
   <input type="checkbox" value="" class="sr-only peer"` +
