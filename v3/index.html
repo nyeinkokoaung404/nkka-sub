@@ -395,6 +395,9 @@
           🔥Click this...🔥
         </label>
         <div class="accordion-content">
+        <button class="copy-button" onclick="copyLink('{{ user.links }}', this)">Copy All Configs</button>
+        </div>
+        <div class="accordion-content">
     <ul>
         {% for link in user.links %}
         <li>
