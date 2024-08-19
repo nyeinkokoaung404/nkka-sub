@@ -307,9 +307,9 @@
       <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
       <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #0000ff">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
       <h1 class="profile-card__bio-name"> {{ user.status.value }} </h1>
-      <p>Status: <span
+      <!--<p>Status: <span
             class="status {% if user.status.value == 'active' %}active{% elif user.status.value == 'limited' %}limited{% elif user.status.value == 'expired' %}expired{% elif user.status.value == 'disabled' %}disabled{% endif %}">{{
-            user.status.value }}</span></p>
+            user.status.value }}</span></p>-->
       <h2 class="profile-card__bio-title"> Volume consumed: {{ user.used_traffic | bytesformat }}</h2>
       {% if user.data_limit_reset_strategy != 'no_reset' %}
       <h2 class="profile-card__bio-title" style="direction: ltr;">
