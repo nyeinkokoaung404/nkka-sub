@@ -404,6 +404,7 @@
       </div>
       <div class="profile-card__separator"></div>
 
+    {% if user.status == 'active' %}
     <h2>Links:</h2>
     <ul>
         {% for link in user.links %}
