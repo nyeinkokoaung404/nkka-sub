@@ -4165,8 +4165,10 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 </head>
 
 <body class="font-body" x-data>
+  
     <input type="checkbox" id="QrModal" class="modal-toggle" />
     <div style="direction: ltr;" class="modal">
+      
         <div class="modal-box">
             <h3 class="text-lg font-bold" id="modalTitle">Dynamic Title</h3>
             <div class="flex items-center justify-center mt-8 mb-4 bg-white py-4 rounded-3xl" id="qrcode"></div>
@@ -4184,10 +4186,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                     class="flex mb-8 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-3xl p-8 dark:text-white text-black flex-col sm:flex-row space-y-10 sm:space-y-0 sm:divide-x sm:rtl:divide-x-reverse sm:divide-blue-600/50">
                     <div class="basis-1/3 space-y-5 flex flex-col items-center py-3 sm:ltr:pr-9 sm:rtl:pl-9" x-data>
                         <!-- <h1>🚀 Panel {{ user.username }} 🚀</h1> -->
-                      <div class="profile-card">
-    <img alt="Avatar Image" class="profile-card__avatar" src="https://images.weserv.nl/?url=https://iam404.serv00.net/404.png?v=4&amp;h=300&amp;w=300&amp;fit=cover&amp;maxage=7d&amp;bg=000">
-    <div class="profile-card__bio">
-      <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
+                        <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
       <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #0000ff">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
       <h1 class="profile-card__bio-name"> {{ user.status.value }} </h1>
       <h2 class="profile-card__bio-title"> Volume consumed: {{ user.used_traffic | bytesformat }}</h2>
@@ -4217,18 +4216,6 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             {% endif %}
         {% endif %}
       </h2>
-      <div class="progressBarContainer">
-        <div class="progressBar">
-          <div class="progressBarRect">
-            <span class="progressBarCircle"></span>
-          </div>
-        </div>
-        <span class="progressBarPoint progressBarPoint--start">{% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{%
-                                    endif %}</span>
-        <span class="progressBarPoint progressBarPoint--end">{{ user.used_traffic | bytesformat
-                                    }}</span>
-      </div>
-    </div>
                         
                         <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #ffff00">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
                         </div>
