@@ -414,6 +414,13 @@
         </li>
         {% endfor %}
     </ul>
+    <div class="qr-popup" id="qrPopup">
+        <div class="qr-close-button">
+            <button onclick="closeQrPopup()">X</button>
+        </div>
+        <div id="qrCodeContainer"></div>
+    </div>
+    {% endif %}
       
     <script>
         function copyLink(link, button) {
