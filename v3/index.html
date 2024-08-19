@@ -297,7 +297,7 @@
             100% { color: #ff00ff; } /* Magenta */
         }
   </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>-->
 </head>
 
 <body>
@@ -416,7 +416,7 @@
       </div>
       <div class="profile-card__separator"></div>
 
-    <!--{% if user.status == 'active' %}-->
+    {% if user.status == 'active' %}
     <h2>Links:</h2>
     <ul>
         {% for link in user.links %}
