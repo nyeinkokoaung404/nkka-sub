@@ -9,16 +9,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;900&display=swap" rel="stylesheet">
-  
-  <link href="https://cdn.jsdelivr.net/gh/MuhammadAshouri/marzban-templates@master/template-01/build.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-  
-  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/gh/MuhammadAshouri/marzban-templates@master/template-01/qrcode.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs-i18n@2.4.0/dist/cdn.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.2.0/dist/alpine-clipboard.js"></script>
    
   <style>
     * {
@@ -307,9 +297,7 @@
       <h1 class="profile-card__bio-name"> Username: {{ user.username }}</h1>
       <h4 style="text-align: center; font-weight: bold;"><span style="color: #f40125">P</span><span style="color: #00FF00">o</span><span style="color: #f27401">w</span><span style="color: #008080">e</span><span style="color: #f27401">r</span><span style="color: #f3a101">e</span><span style="color: #FF00FF">d</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #1cfd00">&nbsp;</span><span style="color: #f90083">B</span><span style="color: #0000ff">y</span><span style="color: #1cfd00">&nbsp;</span><font color="#00ff00">4-0-4</font></h4>
       <h1 class="profile-card__bio-name"> {{ user.status.value }} </h1>
-      <!--<p>Status: <span
-            class="status {% if user.status.value == 'active' %}active{% elif user.status.value == 'limited' %}limited{% elif user.status.value == 'expired' %}expired{% elif user.status.value == 'disabled' %}disabled{% endif %}">{{
-            user.status.value }}</span></p>-->
+      
       <h2 class="profile-card__bio-title"> Volume consumed: {{ user.used_traffic | bytesformat }}</h2>
       {% if user.data_limit_reset_strategy != 'no_reset' %}
       <h2 class="profile-card__bio-title" style="direction: ltr;">
@@ -416,7 +404,6 @@
       </div>
       <div class="profile-card__separator"></div>
 
-    <!--{% if user.status == 'active' %}-->
     <h2>Links:</h2>
     <ul>
         {% for link in user.links %}
