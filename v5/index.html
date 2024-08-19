@@ -1,9 +1,9 @@
-<html lang="ru" data-bs-theme="dark"><head>
+<html lang="en" data-bs-theme="dark"><head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Basic information about subscription and connection methods">
   <link rel="icon" type="image/x-icon" href="https://google.com/pic.png">
-  <title></title>
+  <title>{{ user.username }} Info</title>
 
   <!-- Set the theme at the very beginning, so as not to scare a user with a white screen while loading the page on slow devices -->
   <script type="text/javascript">
@@ -34,12 +34,192 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <script>
         const expireDateInit = "2024-09-18 14:08:11";
         let expireDateVar = expireDateInit.includes("∞") ? "∞" : new Date(expireDateInit).toLocaleString("ru-RU").replace(",", "")
   </script>
+  
+       <style>
 
+        .copy-button {
+            margin-left: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .limited {
+            background-color: #F44336;
+            color: white;
+        }
+
+        .expired {
+            background-color: #FF9800;
+            color: white;
+        }
+
+        .disabled {
+            background-color: #9E9E9E;
+            color: white;
+        }
+
+        .qr-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 10px 25px 25px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 9999;
+        }
+
+        .qr-close-button {
+            text-align: right;
+            margin-bottom: 5px;
+            margin-right: -15px;
+        }
+    .profile-card {
+      position: relative;
+      border: 2px solid #000;
+      border-radius: 1rem;
+      background: #fff;
+      width: 20rem;
+      margin-top: 6rem;
+      margin-bottom: 2rem;
+    }
+    .profile-card::before,
+    .profile-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      border: 2px solid #000;
+      border-radius: 1rem;
+      z-index: -1;
+      transition: transform 200ms ease-out;
+    }
+    .profile-card:hover::before {
+      transform: rotate(-3deg) scale(1.02) translate(-1%);
+    }
+    .profile-card:hover::after {
+      transform: rotate(-6deg) scale(1.02) translate(-1%);
+      z-index: -2;
+      transition-delay: 100ms;
+    }
+    .profile-card__avatar {
+      width: 80px;
+      height: 80px;
+      position: absolute;
+      border: 2px solid #000;
+      -o-object-fit: cover;
+      object-fit: cover;
+      box-shadow: 0 2px 0 #000;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -80%);
+      border-radius: 1rem;
+    }
+    .profile-card__bio {
+      background: #fef9c3;
+      padding: 2rem;
+      border-bottom: 2px dashed #000;
+      text-align: center;
+      border-radius: 1rem 1rem 0 0;
+      overflow: hidden;
+    }
+    .profile-card__bio-name {
+      font-size: 1.25em;
+      font-weight: 900;
+      margin-bottom: 0.8rem;
+    }
+    .profile-card__bio-title {
+      font-size: 0.875em;
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+    }
+    .profile-card__links {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      overflow: hidden;
+    }
+    .profile-card__header {
+      text-align: right;
+      font-size: 1.25em;
+      font-weight: bold;
+      color: #000;
+      display: flex;
+      -webkit-box-pack: justify;
+      justify-content: right;
+      cursor: pointer;
+    }
+    .profile-card__header::after {
+      content: "\276F";
+      width: 1rem;
+      height: 1rem;
+      text-align: center;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
+    .accordion {
+      width: 100%;
+      overflow: hidden;
+    }
+    .accordion:last-child {
+      margin-bottom: 0;
+    }
+    .accordion-content {
+      max-height: 0;
+      padding: 0 1rem;
+      -webkit-transition: all 0.3s;
+      transition: all 0.3s;
+    }
+    input:checked+.profile-card__header::after {
+      -webkit-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+    input:checked~.accordion-content {
+      max-height: 100vh;
+      padding: 16px;
+    }
+    .profile-card__separator {
+      border-bottom: 2px dashed #000;
+      border-radius: 1rem 1rem 0 0;
+      overflow: hidden;
+    }
+    .profile-card__links-button {
+      padding: 1rem;
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      border: 2px solid #000;
+      border-radius: 0.5rem;
+      color: #000;
+      transition: box-shadow 200ms ease;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+    }
+    .profile-card__links-button:hover {
+      box-shadow: -3px 3px 0 #000;
+    }
+  </style>
 </head>
 <body>
 
@@ -341,7 +521,23 @@
               <div id="flush-collapse-help-2" class="accordion-collapse collapse" aria-labelledby="flush-heading-help-2" data-bs-parent="#accordionHelp">
                 <div class="accordion-body">
                   Sometimes you can't add a subscription to the app. In this case, a key will help you out: this is the same connection data, but in a different format. The key is more compatible with different apps, but it cannot automatically update the connection data. In case of changes on the server, you will need to go to this page and re-add the key to the app.<br><br>To add, copy the key by clicking the link below and add it to the application. Usually, the button with the symbol is used for adding "+".
-                  <p style="height: 45px;" class="list-group-item d-flex align-items-center">
+                  <p style="height: 45px;" class="list-group-item d-flex align-items-center">              
+    <ul>
+        {% for link in user.links %}
+        <li>
+            <input type="text" value="{{ link }}" readonly>
+            <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy</button>
+            <button class="qr-button" data-link="{{ link }}">QR Code</button>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="qr-popup" id="qrPopup">
+        <div class="qr-close-button">
+            <button onclick="closeQrPopup()">X</button>
+        </div>
+        <div id="qrCodeContainer"></div>
+    </div>
+    {% endif %}
                   <button style="padding: 0;" type="button" class="btn btn-link link-dark" onclick="copyToClipboard(['{{ link }}']); showNotification('toast');">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewport="" width="24px" height="24px" viewBox="0 0 32 32">
                       <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 009 4.5h6A1.5 1.5 0 0013.5 3h-3zm-2.693.178A3 3 0 0110.5 1.5h3a3 3 0 012.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 01-3 3H6.75a3 3 0 01-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15z" clip-rule="evenodd"></path>
@@ -352,6 +548,35 @@
               </div>
               </div>
           </div>
+      <div class="profile-card__separator"></div>
+      
+    {% if user.status == 'active' %}
+      <h1 class="profile-card__bio-name"> 🌐 My Configs 🌐 </h1>
+      <div class="accordion-item">
+        <input type="checkbox" name="sub404" id="sub404">
+        <label class="profile-card__header" for="sub404">
+          🔥Click this...🔥
+        </label>
+        <div class="accordion-content">
+    <ul>
+        {% for link in user.links %}
+        <li>
+            <input type="text" value="{{ link }}" readonly>
+            <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy</button>
+            <button class="qr-button" data-link="{{ link }}">QR Code</button>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="qr-popup" id="qrPopup">
+        <div class="qr-close-button">
+            <button onclick="closeQrPopup()">X</button>
+        </div>
+        <div id="qrCodeContainer"></div>
+    </div>
+    {% endif %}
+       </div>
+      </div>
+      <div class="profile-card__separator"></div>
 
           <!-- div class="accordion-item">
               <h2 class="accordion-header" id="flush-heading-help-3">
@@ -566,6 +791,42 @@
     }
 
   </style>
+    <script>
+        function copyLink(link, button) {
+            const tempInput = document.createElement('input');
+            tempInput.setAttribute('value', link);
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            button.textContent = 'Copied!';
+            setTimeout(function () {
+                button.textContent = 'Copy';
+            }, 1500);
+        }
+
+        const qrButtons = document.querySelectorAll('.qr-button');
+        const qrPopup = document.getElementById('qrPopup');
+
+        qrButtons.forEach((qrButton) => {
+            qrButton.addEventListener('click', () => {
+                const link = qrButton.dataset.link;
+                while (qrCodeContainer.firstChild) {
+                    qrCodeContainer.removeChild(qrCodeContainer.firstChild);
+                }
+                const qrCode = new QRCode(qrCodeContainer, {
+                    text: link,
+                    width: 256,
+                    height: 256
+                });
+                qrPopup.style.display = 'block';
+            });
+        });
+        function closeQrPopup() {
+            document.getElementById('qrPopup').style.display = 'none';
+        }
+    </script>
 
   <script type="text/javascript">
 
