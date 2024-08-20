@@ -434,7 +434,7 @@
                   <ul>
         {% for link in user.links %}
         <li>
-            <input type="text" value="getRemark{{ link }}" readonly>
+            <input type="text" value="{{ link }}" readonly>
             <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy Key</button>
             <button class="qr-button" data-link="{{ link }}">QR Code</button>
         </li>
