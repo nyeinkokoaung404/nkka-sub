@@ -96,7 +96,7 @@
         }
         
         h2 {
-            text-align: left;
+            text-align: center;
             color: #fff;
             margin-bottom: 20px;
             font-size: 24px;
@@ -433,8 +433,8 @@
                   
                   <ul>
         {% for link in user.links %}
-        <li x-data="{link: '{{ link }}'}">
-            <input type="text" value="getRemark(link)" readonly>
+        <li>
+            <input type="text" value="getRemark({{ link }})" readonly>
             <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy Key</button>
             <button class="qr-button" data-link="{{ link }}">QR Code</button>
         </li>
@@ -729,7 +729,7 @@
 
             button.textContent = 'Copied!';
             setTimeout(function () {
-                button.textContent = 'Copy';
+                button.textContent = 'Copy Keys';
             }, 1500);
         }
 
