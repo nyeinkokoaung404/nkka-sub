@@ -1,0 +1,785 @@
+<html lang="en" data-bs-theme="dark"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Basic information about subscription and connection methods">
+  <link rel="icon" type="image/x-icon" href="https://google.com/pic.png">
+  <title>{{ user.username }} Info</title>
+
+  <!-- Set the theme at the very beginning, so as not to scare a user with a white screen while loading the page on slow devices -->
+  <script type="text/javascript">
+
+    function calculateSettingAsThemeString({ localStorageTheme, systemSettingDark }) {
+      if (localStorageTheme !== null) {
+          return localStorageTheme
+        }
+       if (systemSettingDark.matches) {
+          return "dark"
+       }
+       return "light"
+    }
+
+    function setTheme(newTheme) {
+      document.documentElement.setAttribute('data-bs-theme', newTheme)
+      localStorage.setItem("theme", newTheme);
+      currentThemeSetting = newTheme;
+    }
+    
+    const localStorageTheme = localStorage.getItem("theme");
+    const systemSettingDark = window.matchMedia("(prefers-color-scheme: dark)");
+    let currentThemeSetting = calculateSettingAsThemeString({ localStorageTheme, systemSettingDark });
+
+    setTheme(currentThemeSetting)
+
+  </script>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <script>
+        const expireDateInit = "2024-09-18 14:08:11";
+        let expireDateVar = expireDateInit.includes("∞") ? "∞" : new Date(expireDateInit).toLocaleString("mm-MM").replace(",", "")
+  </script>
+  
+       <style>
+
+        .copy-button {
+            margin-left: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .limited {
+            background-color: #F44336;
+            color: white;
+        }
+
+        .expired {
+            background-color: #FF9800;
+            color: white;
+        }
+
+        .disabled {
+            background-color: #9E9E9E;
+            color: white;
+        }
+
+        .qr-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 10px 25px 25px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 9999;
+        }
+
+        .qr-close-button {
+            text-align: right;
+            margin-bottom: 5px;
+            margin-right: -15px;
+        }
+        
+        h2 {
+            text-align: left;
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 24px;
+            animation: rgbAnimation 3s infinite alternate;
+        }
+        @keyframes rgbAnimation {
+            0% { color: #ff0000; } /* Red */
+            25% { color: #00ff00; } /* Green */
+            50% { color: #0000ff; } /* Blue */
+            75% { color: #ffff00; } /* Yellow */
+            100% { color: #ff00ff; } /* Magenta */
+        }
+  </style>
+</head>
+<body>
+
+  <!-- <header>
+    <h1><img id="logo" src="https://iam404.serv00.net/404.png">Logo</h1>
+  </header> -->
+
+  <main>
+    <div class="modules">
+      <div class="module subscription">
+        <h2 class="module-title">💥 4-0-4 VPN 💥</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Username<span>{{ user.username }}</span>
+            </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Status<span>{{ user.status.value }}</span>  
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            Volume consumed:<span>{{ user.used_traffic | bytesformat }}</h2>
+      {% if user.data_limit_reset_strategy != 'no_reset' %}</span>
+            </li>
+            {% endif %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            Total volume:<span>{% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{% endif %}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              The key is valid until:<span id="expire">{% if not user.expire and not user.on_hold_expire_duration %}
+        ∞
+        {% else %}
+            {% if user.status.value == 'on_hold' %}
+              {% set remaining_seconds = [user.on_hold_expire_duration, 0] | max %}
+            {% else %}
+              {% set current_timestamp = now().timestamp() %}
+              {% set remaining_seconds = [user.expire - current_timestamp, 0] | max %}
+            {% endif %}
+            {% set remaining_days = remaining_seconds // (24 * 3600) %}
+            {% set remaining_hours = (remaining_seconds % (24 * 3600)) // 3600 %}
+            {% set remaining_minutes = (remaining_seconds % 3600) // 60 %}
+            {% if remaining_days >= 1 %}
+                {{ remaining_days | int }} day {{ remaining_hours | int }} hour
+            {% else %}
+                {{ remaining_hours | int }} hour {{ remaining_minutes | int }} minutes
+            {% endif %}
+        {% endif %}</span><!-- <script>document.getElementById('expire').innerHTML = expireDateVar</script> -->
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+            <form class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="btnSwitchTheme">
+              <label class="form-check-label" for="btnSwitchTheme">Dark mode</label>
+            </form>
+            </li>    
+        </ul>
+      </div>
+
+      <div class="module">
+        <h3 class="module-title">Connection</h3>
+        <div class="accordion accordion-flush" id="accordionApps">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-apps-android">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-apps-android" aria-expanded="false" aria-controls="flush-collapse-apps-android">Android</button>
+              </h2>
+              <div id="flush-collapse-apps-android" class="accordion-collapse collapse" aria-labelledby="flush-heading-apps-android" data-bs-parent="#accordionApps">
+                <div class="accordion-body">
+                  <h3>Application v2rayNG</h3>
+                  <div class="list-group list-group-flush">
+                  <p>Install the app from Google Play and add a subscription to it:</p>
+
+                  <ul>
+                  <li>
+                  <a href="https://play.google.com/store/apps/details?id=com.v2ray.ang" class="link list-group-item list-group-item-action" target="_blank">
+                    <span>Install v2rayNG</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  </li>
+                  <li>
+                  <a href="v2rayng://install-config?url=https://nl.zelpen.org/user/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBTHNPcjdnbkRnT3EiLCJhY2Nlc3MiOiJzdWJzY3JpcHRpb24iLCJpYXQiOjE3MjQwNzY0OTJ9.FP8pJFCmx4IKfS2sp2GXeYMvM7nh23W7g8ZY5H-1vqY&amp;name=Title" target="_blank" class="self-link link list-group-item list-group-item-action">
+                    <span>Add subscription</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  </li>
+                  </ul>
+
+
+                </div>
+                     <p>In the app, tap the three vertical dots and select "Update Subscription"".  
+                  <img class="img-fluid rounded img-help" src="https://i.postimg.cc/V6Jqv0qF/photo-5294201900410983789-y.jpg"></p>
+                    <p>🔥 Done, connect! VPN on/off button is in the lower right corner v2rayNG.<br></p>
+              </div>
+              </div>
+           </div>
+
+           <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-apps-ios">
+                <button class="accordion-button collapsed lh0" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-apps-ios" aria-expanded="false" aria-controls="flush-collapse-apps-ios">IOS</button>
+              </h2>
+              <div id="flush-collapse-apps-ios" class="accordion-collapse collapse" aria-labelledby="flush-heading-apps-ios" data-bs-parent="#accordionApps">
+                 <div class="accordion-body">
+                  <h3>Application Streisand</h3>
+                  <div class="list-group list-group-flush">
+                  <p>Install Streisand from App Store and add a subscription to the app:</p>
+
+                  <ul>
+                  <li>
+                  <a href="https://apps.apple.com/us/app/streisand/id6450534064" target="_blank" class="link list-group-item list-group-item-action">
+                    <span>Install Streisand</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  </li>
+                  <li>
+                  <a id="linkFix" href="streisand://import/https://nl.zelpen.org/user/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBTHNPcjdnbkRnT3EiLCJhY2Nlc3MiOiJzdWJzY3JpcHRpb24iLCJpYXQiOjE3MjQwNzY0OTJ9.FP8pJFCmx4IKfS2sp2GXeYMvM7nh23W7g8ZY5H-1vqY#Title" target="_blank" class="link list-group-item list-group-item-action">
+                    <span>Add subscription</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  <!-- For some reason js code doesn't work on Safari. The only quick fix I know -->
+                  <script>
+                    var a = document.getElementById('linkFix');
+                    a.href = "streisand://import/" + window.location.href + "#Title";
+                  </script>
+                  </li>
+                  </ul>
+                 </div>
+                    <p>In the application, go to "Settings" → "Subscription" and check the box "Update on opening".</p>
+                    <p>🔥 Done, connect! <img class="img-fluid rounded img-help" src="https://i.postimg.cc/PxqtYRrc/IMG-7504.jpg"></p>
+
+                    <div class="list-group list-group-flush">
+                      <h6 class="instructions-title">Bonus: Add Routing</h6>
+                      <p>Routing will make your VPN more convenient and secure. With routing, foreign sites and services are opened through VPN, and Russian ones - directly. </p>                  
+                      
+                  <ul>
+                  <li>
+                  <a href="streisand://aW1wb3J0L3JvdXRlOi8vWW5Cc2FYTjBNRERWQVFJREJBVUdIUjRmSUZWeWRXeGxjMTFrYjIxaGFXNU5ZWFJqYUdWeVZHNWhiV1ZlWkc5dFlXbHVVM1J5WVhSbFozbFVkWFZwWktJSEdOTUlDUW9MREExU2FYQmJiM1YwWW05MWJtUlVZV2RXWkc5dFlXbHVvRlprYVhKbFkzU3FEZzhRRVJJVEZCVVdGMTV5WldkbGVIQTZMaXBjTG5KMUpGOFFEMmRsYjNOcGRHVTZlVzkxZEhWaVpWOFFFR2RsYjNOcGRHVTZkR1ZzWldkeVlXMWRaMlZ2YzJsMFpUcGhjSEJzWlY1blpXOXphWFJsT21kdmIyZHNaVjVuWlc5emFYUmxPbmxoYm1SbGVGcG5aVzl6YVhSbE9uWnJYeEFYWjJWdmMybDBaVHBqWVhSbFoyOXllUzFuYjNZdGNuVmVaMlZ2YzJsMFpUcDBkMmwwWTJoZkVCQm5aVzl6YVhSbE9uZG9ZWFJ6WVhCdzBnZ1pHZ3hiYjNWMFltOTFibVJVWVdlaUd4eFlaMlZ2YVhBNmNuVmRaMlZ2YVhBNmNISnBkbUYwWlZab2VXSnlhV1JvQkNBRVBnUkRCRUlFT0FROUJETUFJRnBKVUU5dVJHVnRZVzVrWHhBa1FqUkNRemRHUWtNdE1FSTVPUzAwT1RNd0xVSXhSVU10TjBWRE1rVkdSRGRDTVRFM0FBZ0FFd0FaQUNjQUxBQTdBRUFBUXdCS0FFMEFXUUJnQUdFQWFBQnpBSUlBbEFDbkFMVUF4QURUQU40QStBRUhBUm9CSHdFckFTNEJOd0ZGQVV3QlhRRm9BQUFBQUFBQUFnRUFBQUFBQUFBQUlRQUFBQUFBQUFBQUFBQUFBQUFBQVk4PQ==" target="_blank" class="link list-group-item list-group-item-action">
+                      <span>Add routing</span>
+                        <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                    </a>
+                  </li>
+                  </ul>
+
+                  </div>
+                    <p>Then in the app, click "Routing", put a check mark next to it, and click the checkbox at the top to apply the routing rules. Done, you're awesome!</p>
+
+              </div>
+              </div>
+          </div>
+          <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-apps-windows">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-apps-windows" aria-expanded="false" aria-controls="flush-collapse-apps-windows">Windows</button>
+              </h2>
+              <div id="flush-collapse-apps-windows" class="accordion-collapse collapse" aria-labelledby="flush-heading-apps-windows" data-bs-parent="#accordionApps">
+                <div class="accordion-body">
+                  <h3>Application Hiddify</h3>
+                  Install the app from Microsoft Store and add a subscription to it:
+                  <div class="list-group list-group-flush">
+
+                  <ul>
+                  <li>
+                  <a href="ms-windows-store://pdp?hl=ru-ru&amp;gl=pl%2F&amp;productid=9pdfnl3qv2s5" target="_blank" class="link list-group-item list-group-item-action">
+                    <span>Install Hiddify</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  </li><li>
+                  <a href="hiddify://install-sub/?url=https://nl.zelpen.org/user/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBTHNPcjdnbkRnT3EiLCJhY2Nlc3MiOiJzdWJzY3JpcHRpb24iLCJpYXQiOjE3MjQwNzY0OTJ9.FP8pJFCmx4IKfS2sp2GXeYMvM7nh23W7g8ZY5H-1vqY#Title" target="_blank" class="self-link link list-group-item list-group-item-action">
+                    <span>Add subscription</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  </li></ul>
+                </div>
+                    <p>🔥 Done, connect!</p>
+                  <div class="instructions">
+                    <h6 class="instructions-title">Bonus: Add Routing</h6>
+                    <p>Routing will make your VPN more convenient and safer. With routing, foreign sites and services are opened through VPN, and Russian ones - directly. To do this, in the settings Hiddify language: Russian, region: Russia must be specified. To open all sites via VPN, select the region "Other".</p>
+                </div>
+              </div>
+              </div>
+           </div>
+           <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-apps-macos">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-apps-macos" aria-expanded="false" aria-controls="flush-collapse-apps-macos">macOS</button>
+              </h2>
+              <div id="flush-collapse-apps-macos" class="accordion-collapse collapse" aria-labelledby="flush-heading-apps-macos" data-bs-parent="#accordionApps">
+                <div class="accordion-body">
+                  <h3>Application V2Box</h3>
+                  Install the app from the Mac App Store and add a subscription. 
+                  
+                  <div class="list-group list-group-flush">
+                  <ul>
+                  <li>
+                  <a href="https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690" target="_blank" class="link list-group-item list-group-item-action">
+                    <span>Download from Mac App Store</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  </li>
+                  <li>
+                  <a href="v2box://install-sub?url=${fullUrl}&amp;name=sub" target="_blank" class="self-link link list-group-item list-group-item-action">
+                    <span>Add subscription</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  </li>
+                  </ul>
+                  <p>In the application on the tab Configs select the added subscription by clicking on it.</p>
+                   <p>🔥 Done, connect!</p>
+                </div>
+
+                  <div class="instructions">
+                    <h6 class="instructions-title">Bonus: Add Routing</h6>
+                    <p>Routing will make your VPN more convenient and secure. With routing, foreign sites and services are opened through VPN, and Russian ones - directly.</p>
+                    <div class="list-group list-group-flush">
+                    <ul>
+                    <li>
+                    <a href="v2box://routes?multi=W3sidHlwZSI6IkRvbWFpbiIsIm1hdGNoTW9kZSI6ImtleXdvcmQiLCJ0YWciOiJkaXJlY3QiLCJuYW1lIjoicm91dGUuRDM4OEU3MjMtOTJENS00QkJDLUFFNEItMzkyQkM0NTI3ODMyIiwibGlzdCI6WyJyZWdleHA6LipcXC5ydSQiXSwicmVtYXJrIjoiUlUtRGlyZWN0IiwiaXNFbmFibGUiOnRydWUsImxpc3RJUCI6WyJnZW9pcDpydSJdfSx7InJlbWFyayI6Ik1lc3NhZ2Vycy1kaXJlY3QiLCJ0YWciOiJkaXJlY3QiLCJpc0VuYWJsZSI6dHJ1ZSwibmFtZSI6InJvdXRlLkE2MDkwODQyLTVDMzYtNDJFMi1BMkI5LTdERjlEODA2ODM4NiIsImxpc3RJUCI6W10sIm1hdGNoTW9kZSI6ImtleXdvcmQiLCJ0eXBlIjoiRG9tYWluIiwibGlzdCI6WyJnZW9zaXRlOnRlbGVncmFtIiwiZ2Vvc2l0ZTp3aGF0c2FwcCIsImdlb3NpdGU6YXBwbGUiLCJnZW9zaXRlOml0dW5lcyIsImdlb3NpdGU6Z29vZ2xlIiwiZ2Vvc2l0ZTp5YW5kZXgiXX1d" target="_blank" class="self-link link list-group-item list-group-item-action">
+                    <span>Add routing</span>
+                    <div class="link-icon">
+                      <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                    </div>
+                  </a>
+                  </li>
+                  </ul>
+
+                </div>
+                    
+                  </div>
+              </div>
+              </div>
+           </div>
+           <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-apps-linux">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-apps-linux" aria-expanded="false" aria-controls="flush-collapse-apps-linux">Linux</button>
+              </h2>
+              <div id="flush-collapse-apps-linux" class="accordion-collapse collapse" aria-labelledby="flush-heading-apps-linux" data-bs-parent="#accordionApps">
+                <div class="accordion-body">
+                  <h3>Hiddify</h3>
+                  Hiddify — recommended app for Linux
+                  
+                  <div class="list-group list-group-flush">
+                  <a href="https://github.com/hiddify/hiddify-next/releases/latest/download/hiddify-linux-x64.zip" target="_blank" class="link list-group-item list-group-item-action">
+                    <span>Download from GitHub</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
+                      </div>
+                  </a>
+                  <a href="hiddify://install-sub/?url={link}#Title" target="_blank" class="self-link link list-group-item list-group-item-action">
+                    <span>Add subscription</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
+                      </div>
+                  </a>
+                </div>
+                
+                  <div class="instructions">
+                    <h6 class="instructions-title">Connection instructions</h6>
+                    <p>1. Click Download from GitHub to install the app</p>
+                    <p>2. Change the language to Russian, specify Russia as the region (this is necessary so that the routing settings are applied automatically) and click Start <img class="img-fluid rounded img-help" src="https://google.com/pic.png"></p>
+                    <p>3. Click Add Subscription</p>
+                    <p>4. Click connect. Done!<img class="img-fluid rounded img-help" src="https://google.com/pic.png"></p>
+                  </div>
+              </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="module">
+        <h3 class="module-title">Reference</h3>
+        <div class="accordion accordion-flush" id="accordionHelp">
+
+          <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-help-1">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-help-1" aria-expanded="false" aria-controls="flush-collapse-help-1">What is a subscription??</button>
+              </h2>
+              <div id="flush-collapse-help-1" class="accordion-collapse collapse" aria-labelledby="flush-heading-help-1" data-bs-parent="#accordionHelp">
+                <div class="accordion-body">
+                  A subscription is a link in a special format, through which the application downloads data from the server that is necessary for connection..
+              </div>
+              </div>
+          </div>
+
+          <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-help-2">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-help-2" aria-expanded="false" aria-controls="flush-collapse-help-2">What if the subscription is not added?</button>
+              </h2>
+              <div id="flush-collapse-help-2" class="accordion-collapse collapse" aria-labelledby="flush-heading-help-2" data-bs-parent="#accordionHelp">
+                <div class="accordion-body">
+                  Sometimes you can't add a subscription to the app. In this case, a key will help you out: this is the same connection data, but in a different format. The key is more compatible with different apps, but it cannot automatically update the connection data. In case of changes on the server, you will need to go to this page and re-add the key to the app.<br><br>To add, copy the key by clicking the link below and add it to the application. Usually, the button with the symbol is used for adding "+".
+                  <p style="height: 45px;" class="list-group-item d-flex align-items-center">
+                  <button style="padding: 0;" type="button" class="btn btn-link link-dark" onclick="copyToClipboard(['{{ link }}']); showNotification('toast');">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewport="" width="24px" height="24px" viewBox="0 0 32 32">
+                      <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 009 4.5h6A1.5 1.5 0 0013.5 3h-3zm-2.693.178A3 3 0 0110.5 1.5h3a3 3 0 012.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 01-3 3H6.75a3 3 0 01-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15z" clip-rule="evenodd"></path>
+                    </svg>Copy key
+                  </button>
+                  </p><div id="toast">key copied</div>
+                <p></p>    
+              </div>
+              </div>
+          </div>
+          
+    {% if user.status == 'active' %}
+          <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-help-3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-help-3" aria-expanded="false" aria-controls="flush-collapse-help-3">🌐 My Configs 🌐</button>
+              </h2>
+              <div id="flush-collapse-help-3" class="accordion-collapse collapse" aria-labelledby="flush-heading-help-3" data-bs-parent="#accordionHelp">
+                <div class="accordion-body">
+                  
+                  <ul>
+        {% for link in user.links %}
+        <li x-data="{link: '{{ link }}'}">
+            <input type="text" value="getRemark(link)" readonly>
+            <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy Key</button>
+            <button class="qr-button" data-link="{{ link }}">QR Code</button>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="qr-popup" id="qrPopup">
+        <div class="qr-close-button">
+            <button onclick="closeQrPopup()">X</button>
+        </div>
+        <div id="qrCodeContainer"></div>
+    </div>
+    {% endif %}
+              </div>
+              </div>
+          </div>
+          
+    <!-- {% if user.status == 'active' %}
+          <div class="module">
+        <h3 class="module-title">🌐 My Configs 🌐</h3>
+          
+          <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-help-3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-help-3" aria-expanded="false" aria-controls="flush-collapse-help-3">🌐 My Configs 🌐</button>
+              </h2>
+              <div class="accordion-content">
+    <ul>
+        {% for link in user.links %}
+        <li>
+            <input type="text" value="{{ link }}" readonly>
+            <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy</button>
+            <button class="qr-button" data-link="{{ link }}">QR Code</button>
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="qr-popup" id="qrPopup">
+        <div class="qr-close-button">
+            <button onclick="closeQrPopup()">X</button>
+        </div>
+        <div id="qrCodeContainer"></div>
+    </div>
+    {% endif %}
+       </div>
+              <div id="flush-collapse-help-3" class="accordion-collapse collapse" aria-labelledby="flush-heading-help-3" data-bs-parent="#accordionHelp">
+                <div class="accordion-body">
+                  
+              </div>
+              </div>
+          </div> -->
+
+          <!-- div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-help-3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-help-3" aria-expanded="false" aria-controls="flush-collapse-help-3">About</button>
+              </h2>
+              <div id="flush-collapse-help-3" class="accordion-collapse collapse" aria-labelledby="flush-heading-help-3" data-bs-parent="#accordionHelp">
+               <div class="accordion-body">
+               Digital Ocean VPS You can buy ready-to-use servers with Outline Panel from me.
+<br><br>Keys such as Outline-Vmess can be purchased
+<br><br>💢150GB - 2000ks (30Days)
+<br>💢Unlimited - 3000ks (30Days)
+<br><br>If you want to buy > @iAmVersion2
+              </div>
+              <div class="accordion-body">
+                <a href="https://t.me/nkka404" target="_blank" class="link-dark" rel="noopener noreferrer">Click to Support in Telegram</a>
+              </div>
+              </div>
+          </div -->
+          </div>
+        </div>
+      </div>
+   <!-- </div> -->
+      
+      <div class="module">
+        <h3 class="module-title">VIP Prices</h3>
+        <div class="accordion accordion-flush" id="accordionHelp">
+          <div class="accordion-item">
+              <h2 class="accordion-header" id="flush-heading-help-4">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-help-4" aria-expanded="false" aria-controls="flush-collapse-help-4">About</button>
+              </h2>
+              <div id="flush-collapse-help-4" class="accordion-collapse collapse" aria-labelledby="flush-heading-help-4" data-bs-parent="#accordionHelp">
+              <div class="accordion-body">
+                    
+                    <p>🔸. Digital Ocean VPS You can buy ready-to-use servers with Outline Panel from me.</p>
+                    <p>🔹. Keys such as Outline-Vmess can be purchased <img class="img-fluid rounded img-help" src="https://google.com/pic.png"></p>
+                    <p>💢. 150GB - 2000ks (30Days)</p>
+                    <p>💢. Unlimited - 3000ks (30Days)<img class="img-fluid rounded img-help" src="https://google.com/pic.png"></p>
+                    <p>🔻. Click the link below if you want to buy.<img class="img-fluid rounded img-help" src="https://google.com/pic.png"></p>
+              </div>
+              <div class="accordion-body">
+                <a href="https://t.me/nkka404" target="_blank" class="link-dark" rel="noopener noreferrer">📲Click to buy in Telegram</a>
+              </div>
+             </div>
+           </div>
+          </div>
+        </div>
+  
+
+  <style>
+
+    html {
+        margin: auto;
+        max-width: 520px;
+        min-width: 300px;
+        padding: 0 25px 50px 25px;
+    }
+
+    .dot {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;  
+    }
+
+    .dot-red {
+      background-color: #bf1d11;
+    }
+
+    .dot-green {
+      background-color: green;
+    }
+
+    .dot-yellow {
+      background-color: #ffbe0a;
+    }
+
+    .app-icon {
+      margin-right: 8px;
+    }
+
+    .img-help {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .subscription li {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .accordion-body .list-group {
+      padding-bottom: 5px;
+    }
+
+    .accordion, 
+    .subscription .list-group {
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .accordion .list-group {
+      padding-top: 25px;
+        --bs-list-group-item-padding-x: 5px;
+    }
+
+    .lh0 {
+      line-height: 0;
+    }
+
+    .instructions {
+      margin-top: 30px;
+    }
+
+    .instructions p {
+      margin-bottom: 5px;
+    }
+
+    .instructions-title {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .link {
+      display: flex;
+    }
+
+    .link-icon {
+      width: 25px;
+      height: 25px;
+      margin-left: auto;
+    }
+
+    .module-title {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background-color: #DCDCDC;
+      color: var(--bs-accordion-btn-color)
+    }
+
+    .accordion-button:focus {
+      box-shadow: none;
+      border-color: white;
+    }
+
+    .form-check-input:focus {
+      box-shadow: none;
+    }
+
+    #toast {
+      visibility: hidden;
+        width: fit-content;
+        margin: auto;
+        color: #000;
+        text-align: center;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        top: 45px;
+        font-size: 16px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    #toast.show {
+        visibility: visible;
+        animation: fadein 1s, fadeout 1s 2s;
+    }
+
+    @keyframes fadein {
+        from {
+            top: 0;
+            opacity: 0;
+        }
+        to {
+            top: 45px;
+            opacity: 1
+        }
+    }
+
+    @keyframes fadeout {
+        from {
+            top: 45px;
+            opacity: 1;
+        }
+        to {
+            top: 0;
+            opacity: 0;
+        }
+    }
+
+    [data-bs-theme=light] .form-check-input:focus {
+      border-color: #dee2e6;
+      --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
+    }
+
+
+
+    /* Full dark theme */
+    [data-bs-theme=dark] .link-dark {
+      color: #dee2e6 !important; 
+      text-decoration: none;
+    }
+
+    [data-bs-theme=dark] #toast {
+      color: var(--bs-list-group-color)
+    }
+
+    [data-bs-theme=dark] svg {
+      filter: invert(100%) sepia(10%) saturate(7500%) hue-rotate(198deg) brightness(120%) contrast(108%);
+    }
+
+    [data-bs-theme=dark] *,
+    [data-bs-theme=dark] .subscription .list-group-item span, 
+    {
+        background-color: #181818;
+    }
+
+    [data-bs-theme=dark] .accordion-button,
+    [data-bs-theme=dark] .subscription .list-group-item,
+    [data-bs-theme=dark] .subscription .list-group-item > *
+    {
+        background-color: #282828;
+    }
+
+    [data-bs-theme=dark] .accordion-button:not(.collapsed) {
+      background-color: #383838;
+    }
+
+  </style>
+    <script>
+        function copyLink(link, button) {
+            const tempInput = document.createElement('input');
+            tempInput.setAttribute('value', link);
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            button.textContent = 'Copied!';
+            setTimeout(function () {
+                button.textContent = 'Copy';
+            }, 1500);
+        }
+
+        const qrButtons = document.querySelectorAll('.qr-button');
+        const qrPopup = document.getElementById('qrPopup');
+
+        qrButtons.forEach((qrButton) => {
+            qrButton.addEventListener('click', () => {
+                const link = qrButton.dataset.link;
+                while (qrCodeContainer.firstChild) {
+                    qrCodeContainer.removeChild(qrCodeContainer.firstChild);
+                }
+                const qrCode = new QRCode(qrCodeContainer, {
+                    text: link,
+                    width: 256,
+                    height: 256
+                });
+                qrPopup.style.display = 'block';
+            });
+        });
+        function closeQrPopup() {
+            document.getElementById('qrPopup').style.display = 'none';
+        }
+    </script>
+
+  <script type="text/javascript">
+
+    function showNotification(notificationElementId) {
+        let notification = document.getElementById(notificationElementId)
+        notification.className = "show";
+        setTimeout(() => { 
+          notification.className = notification.className.replace("show", ""); 
+        }, 2900);
+    }
+    
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text);
+    }
+
+    const buttonSwitchTheme = document.getElementById('btnSwitchTheme');
+    buttonSwitchTheme.checked = currentThemeSetting === 'dark';
+    buttonSwitchTheme.addEventListener("click", () => {
+        const newTheme = currentThemeSetting === "dark" ? "light" : "dark";
+        setTheme(newTheme);        
+    });
+
+    const links = document.getElementsByClassName('self-link');
+    Array.from(links).forEach(link => {
+      link.href = link.href.replace('{link}', window.location.href);
+    });
+
+  </script>
+</main></body></html>
