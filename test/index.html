@@ -188,7 +188,7 @@
                   </a>
                   </li>
                   <li>
-                  <a href="v2rayng://install-config?url=https://nl.zelpen.org/user/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBTHNPcjdnbkRnT3EiLCJhY2Nlc3MiOiJzdWJzY3JpcHRpb24iLCJpYXQiOjE3MjQwNzY0OTJ9.FP8pJFCmx4IKfS2sp2GXeYMvM7nh23W7g8ZY5H-1vqY&amp;name=Title" target="_blank" class="self-link link list-group-item list-group-item-action">
+                  <a href="v2rayng://install-config?url={{ user.subscription_url }}&amp;name={{ user.username }}" target="_blank" class="self-link link list-group-item list-group-item-action">
                     <span>Add subscription</span>
                       <div class="link-icon">
                         <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
@@ -226,7 +226,7 @@
                   </a>
                   </li>
                   <li>
-                  <a id="linkFix" href="streisand://import/https://nl.zelpen.org/user/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBTHNPcjdnbkRnT3EiLCJhY2Nlc3MiOiJzdWJzY3JpcHRpb24iLCJpYXQiOjE3MjQwNzY0OTJ9.FP8pJFCmx4IKfS2sp2GXeYMvM7nh23W7g8ZY5H-1vqY#Title" target="_blank" class="link list-group-item list-group-item-action">
+                  <a id="linkFix" href="streisand://import/{{ user.subscription_url }}#{{ user.username }}" target="_blank" class="link list-group-item list-group-item-action">
                     <span>Add subscription</span>
                       <div class="link-icon">
                         <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
@@ -235,7 +235,7 @@
                   <!-- For some reason js code doesn't work on Safari. The only quick fix I know -->
                   <script>
                     var a = document.getElementById('linkFix');
-                    a.href = "streisand://import/" + window.location.href + "#Title";
+                    a.href = "streisand://import/" + window.location.href + "#{{ user.username }}";
                   </script>
                   </li>
                   </ul>
@@ -283,7 +283,7 @@
                       </div>
                   </a>
                   </li><li>
-                  <a href="hiddify://install-sub/?url=https://nl.zelpen.org/user/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBTHNPcjdnbkRnT3EiLCJhY2Nlc3MiOiJzdWJzY3JpcHRpb24iLCJpYXQiOjE3MjQwNzY0OTJ9.FP8pJFCmx4IKfS2sp2GXeYMvM7nh23W7g8ZY5H-1vqY#Title" target="_blank" class="self-link link list-group-item list-group-item-action">
+                  <a href="hiddify://install-sub/?url={{ user.subscription_url }}#{{ user.username }}" target="_blank" class="self-link link list-group-item list-group-item-action">
                     <span>Add subscription</span>
                       <div class="link-icon">
                         <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
@@ -319,7 +319,7 @@
                   </a>
                   </li>
                   <li>
-                  <a href="v2box://install-sub?url=${fullUrl}&amp;name=sub" target="_blank" class="self-link link list-group-item list-group-item-action">
+                  <a href="v2box://install-sub?url=${fullUrl}&amp;name={{ user.username }}" target="_blank" class="self-link link list-group-item list-group-item-action">
                     <span>Add subscription</span>
                       <div class="link-icon">
                         <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
@@ -368,7 +368,7 @@
                         <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
                       </div>
                   </a>
-                  <a href="hiddify://install-sub/?url={link}#Title" target="_blank" class="self-link link list-group-item list-group-item-action">
+                  <a href="hiddify://install-sub/?url={link}#{{ user.username }}" target="_blank" class="self-link link list-group-item list-group-item-action">
                     <span>Add subscription</span>
                       <div class="link-icon">
                         <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" /></svg>
