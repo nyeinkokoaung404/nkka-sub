@@ -126,7 +126,9 @@
               Username<span>{{ user.username }}</span>
             </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
-            Status<span>{{ user.status.value }}</span>  
+            Status<span
+            class="status {% if user.status.value == 'active' %}active{% elif user.status.value == 'limited' %}limited{% elif user.status.value == 'expired' %}expired{% elif user.status.value == 'disabled' %}disabled{% endif %}">{{
+            user.status.value }}</span>  
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
             Data Usage<span>{{ user.used_traffic | bytesformat }} / {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{% endif %}</span>
