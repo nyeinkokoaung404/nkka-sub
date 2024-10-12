@@ -525,7 +525,13 @@
               </h2>
               <div id="flush-collapse-help-3" class="accordion-collapse collapse" aria-labelledby="flush-heading-help-3" data-bs-parent="#accordionHelp">
                 <div class="accordion-body">
-                  
+                  <ul>
+                  <li>
+            <input type="text" value="{{ user.subscription_url }}" readonly>
+            <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy Key</button>
+            <button class="qr-button" data-link="{{ link }}">QR Code</button>
+        </li>
+                  </ul>
                   <ul>
         {% for link in user.links %}
         <!--<p style="height: 45px;" class="list-group-item d-flex align-items-center">
@@ -536,11 +542,6 @@
                   </button>
                   </p><div id="toast">key copied</div>
                 <p></p> -->
-        <li>
-            <input type="text" value="{{ user.links }}" readonly>
-            <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy Key</button>
-            <button class="qr-button" data-link="{{ link }}">QR Code</button>
-        </li>
         <li>
             <input type="text" value="{{ link }}" readonly>
             <button class="copy-button" onclick="copyLink('{{ link }}', this)">Copy Key</button>
