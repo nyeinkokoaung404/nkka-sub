@@ -95,82 +95,48 @@
             margin-right: -15px;
         }
         
-.box{
+h4{
     position: relative;
-    width: 45rem;
-    /* calculate */
-    height: 15rem;
-    /* calculate */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: transparent;
+    -webkit-text-stroke: 0.1rem #00abf0;
+    background-image: linear-gradient(#00abf0, #00abf0);
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-position: -44rem 0;
+    /* set the minimum position value so that the color did not show up. if you add padding then add extra padding value also for example here at first it was -64rem later I add 1rem padding both left and right side of the text. then we have to change the -66rem position */
+    padding: 0 1rem;
+    animation: animate 6s linear infinite;
 }
 
-.box h2{
-    color: #fff;
-    font-size: 5rem;
-    font-weight: 500;
-    letter-spacing: 0.1rem;
-    text-shadow: 0 0 10px #DFFF00,
-    0 0 20px #DFFF00,
-    0 0 40px #DFFF00,
-    0 0 80px #DFFF00;
-}
-.lightBar{
+h4::before{
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 10px;
+    width: 0%;
     height: 100%;
-    border-radius: 10px;
-    background: #fff;
-    z-index: 2;
-    box-shadow: 0 0 10px #DFFF00,
-    0 0 20px #DFFF00,
-    0 0 40px #DFFF00,
-    0 0 80px #DFFF00;
-    animation: animate 5s linear infinite;
+    border-right: 4px solid #00abf0;
+    animation: lineAnimate 6s linear infinite;
 }
 
 @keyframes animate {
-    0%, 5%{
-        transform: scaleY(0) translateX(0);
+    0%, 10%, 100%{
+        background-position: -44rem 0;
     }
-    10%{
-        transform: scaleY(1) translate(0);
-    }
-    90%{
-        transform: scaleY(1) translateX(calc(45rem - 10px));
-        /* box width - lightbar width */
-    }
-    95%, 100%{
-        transform: scaleY(0) translateX(calc(45rem - 10px));
+    80%,90%{
+        background-position: 0 0;
     }
 }
 
-.topLayer{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    animation: topLayerAnimate 10s linear infinite;
-}
-
-@keyframes topLayerAnimate {
-    0%, 5%{
-        transform: translateX(0);
+@keyframes lineAnimate {
+    0%, 10%, 100%{
+        width: 0%;
     }
-    45%, 50%{
-        transform: translateX(100%);
-    }
-
-    50.001%, 55%{
-        transform: translateX(-100%);
-    }
-    95%, 100%{
-        transform: translateX(0%);
+    80%,90%{
+        width: 100%;
     }
 }
   </style>
@@ -184,13 +150,13 @@
   <main>
     <div class="modules">
       <div class="module subscription">
-        <!--<h2 class="module-title">💥 4-0-4 VPN 💥</h2>-->
+        <h4 class="module-title">💥 4-0-4 VPN 💥</h4>
         <!--<h2 class="box">💥 4-0-4 VPN 💥</h2>-->
-       <div class="module-title">
+       <!--<div class="box">
         <div class="lightBar"></div>
         <div class="topLayer"></div>
         <h2>4-0-4 VPN</h2>
-    </div>
+    </div>-->
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Username<span>{{ user.username }}</span>
@@ -413,7 +379,7 @@
                   </a>
                   </li>
                   <li>
-                  <a id="linkFix1" href="v2box://install-sub?url={{ user.subscription_url }}&name={{ user.username }}" target="_blank" class="link list-group-item list-group-item-action">
+                  <a id="linkFix2" href="hiddify://import/{{ user.subscription_url }}#{{ user.username }}" target="_blank" class="link list-group-item list-group-item-action">
                     <span>Add subscription</span>
                       <div class="link-icon">
                         <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
@@ -421,8 +387,8 @@
                   </a>
                   <!-- For some reason js code doesn't work on Safari. The only quick fix I know -->
                   <script>
-                    var a = document.getElementById('linkFix1');
-                    a.href = "v2box://install-sub?url=" + window.location.href + "&name={{ user.username }}";
+                    var a = document.getElementById('linkFix2');
+                    a.href = "hiddify://import/{{ user.subscription_url }}" + window.location.href + "#{{ user.username }}";
                   </script>
                   </li>
                   </ul>
