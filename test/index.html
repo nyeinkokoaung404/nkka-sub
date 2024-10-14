@@ -95,20 +95,84 @@
             margin-right: -15px;
         }
         
-        h2 {
-            text-align: center;
-            color: #fff;
-            margin-bottom: 20px;
-            font-size: 24px;
-            animation: rgbAnimation 3s infinite alternate;
-        }
-        @keyframes rgbAnimation {
-            0% { color: #ff0000; } /* Red */
-            25% { color: #00ff00; } /* Green */
-            50% { color: #0000ff; } /* Blue */
-            75% { color: #ffff00; } /* Yellow */
-            100% { color: #ff00ff; } /* Magenta */
-        }
+.box{
+    position: relative;
+    width: 45rem;
+    /* calculate */
+    height: 15rem;
+    /* calculate */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box h2{
+    color: #fff;
+    font-size: 5rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    text-shadow: 0 0 10px #DFFF00,
+    0 0 20px #DFFF00,
+    0 0 40px #DFFF00,
+    0 0 80px #DFFF00;
+}
+.lightBar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100%;
+    border-radius: 10px;
+    background: #fff;
+    z-index: 2;
+    box-shadow: 0 0 10px #DFFF00,
+    0 0 20px #DFFF00,
+    0 0 40px #DFFF00,
+    0 0 80px #DFFF00;
+    animation: animate 5s linear infinite;
+}
+
+@keyframes animate {
+    0%, 5%{
+        transform: scaleY(0) translateX(0);
+    }
+    10%{
+        transform: scaleY(1) translate(0);
+    }
+    90%{
+        transform: scaleY(1) translateX(calc(45rem - 10px));
+        /* box width - lightbar width */
+    }
+    95%, 100%{
+        transform: scaleY(0) translateX(calc(45rem - 10px));
+    }
+}
+
+.topLayer{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    animation: topLayerAnimate 10s linear infinite;
+}
+
+@keyframes topLayerAnimate {
+    0%, 5%{
+        transform: translateX(0);
+    }
+    45%, 50%{
+        transform: translateX(100%);
+    }
+
+    50.001%, 55%{
+        transform: translateX(-100%);
+    }
+    95%, 100%{
+        transform: translateX(0%);
+    }
+}
   </style>
 </head>
 <body>
@@ -120,7 +184,12 @@
   <main>
     <div class="modules">
       <div class="module subscription">
-        <h2 class="module-title">💥 4-0-4 VPN 💥</h2>
+        <!--<h2 class="module-title">💥 4-0-4 VPN 💥</h2>-->
+        <div class="box">
+        <div class="lightBar"></div>
+        <div class="topLayer"></div>
+        <h2>4-0-4 VPN</h2>
+    </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Username<span>{{ user.username }}</span>
