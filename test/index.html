@@ -389,6 +389,31 @@ h4::before{
                   </script>
                   </li>
                   </ul>
+                  <!-- IOS Karing -->
+                  <ul>
+                  <li>
+                  <a href="https://apps.apple.com/us/app/karing/id6472431552" target="_blank" class="link list-group-item list-group-item-action">
+                    <span>Install Karing</span>
+                      <div class="link-icon">
+                      <img width="24" height="24" src="https://raw.githubusercontent.com/nyeinkokoaung404/nkka-sub/main/ic_hiddify.svg">
+                       
+                      </div>
+                  </a>
+                  </li>
+                  <li>
+                  <a id="linkFix3" href="karing://install-config?url={{ user.subscription_url }}&name={{ user.username }}" target="_blank" class="link list-group-item list-group-item-action">
+                    <span>Add subscription</span>
+                      <div class="link-icon">
+                        <svg class="icon" width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z"></path></svg>
+                      </div>
+                  </a>
+                  <!-- For some reason js code doesn't work on Safari. The only quick fix I know -->
+                  <script>
+                    var a = document.getElementById('linkFix3');
+                    a.href = "karing://install-config?url=" + window.location.href + "&name={{ user.username }}";
+                  </script>
+                  </li>
+                  </ul>
                   <!-- IOS Streisand -->
                   <ul>
                   <li>
