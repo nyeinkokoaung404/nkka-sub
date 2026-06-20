@@ -1,22 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="216" height="216" viewBox="0 0 100 100">
   <style>
-    .dynamic-logo {
-      fill: #1A1A1A;
-      transition: fill 0.3s ease;
+    .dynamic-happ-icon {
+      fill: #1E1E1E;
+      transition: fill 0.25s ease-in-out;
     }
     @media (prefers-color-scheme: dark) {
-      .dynamic-logo {
+      .dynamic-happ-icon {
         fill: #FFFFFF;
       }
     }
   </style>
 
   <defs>
-    <mask id="slashes">
+    <mask id="slashes-mask">
       <rect width="100" height="100" fill="white" />
-      <path d="M -10 42 L 110 -8 M -10 72 L 110 22 M -10 102 L 110 52" stroke="black" stroke-width="4" />
+      <path d="M -10 36 L 110 -14 M -10 66 L 110 16 M -10 96 L 110 46" stroke="black" stroke-width="4.2" stroke-linecap="round" />
     </mask>
   </defs>
 
-  <path class="dynamic-logo" d="M 20 15 H 42 V 41 H 58 V 15 H 80 V 85 H 58 V 59 H 42 V 85 H 20 Z" mask="url(#slashes)" />
+  <path class="dynamic-happ-icon" d="M 23 13 H 43 V 41 H 57 V 13 H 77 V 87 H 57 V 59 H 43 V 87 H 23 Z" mask="url(#slashes-mask)" />
 </svg>
