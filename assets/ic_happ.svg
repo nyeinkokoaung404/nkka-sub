@@ -5,5 +5,5 @@
       <path d="M -10 42 L 110 -8 M -10 72 L 110 22 M -10 102 L 110 52" stroke="black" stroke-width="4" />
     </mask>
   </defs>
-  <path d="M 20 15 H 42 V 41 H 58 V 15 H 80 V 85 H 58 V 59 H 42 V 85 H 20 Z" fill="#FFFFFF" mask="url(#slashes)" />
+  <path d="M 20 15 H 42 V 41 H 58 V 15 H 80 V 85 H 58 V 59 H 42 V 85 H 20 Z" fill="#FDFDFE" mask="url(#slashes)" />
 </svg>
